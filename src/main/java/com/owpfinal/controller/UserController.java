@@ -20,10 +20,9 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 @Controller
-@RequestMapping(value="/Korisnici")
+@RequestMapping(value="/korisnici")
 public class UserController {
 
     public static final String USER_KEY = "loggedUser";
@@ -45,31 +44,26 @@ public class UserController {
     }
 
 
-    @GetMapping
+    /*@GetMapping
     public ModelAndView index(HttpServletResponse response) throws IOException {
 
-        User loggedUser = (User) session.getAttribute(UserController.USER_KEY);
-        if (loggedUser == null) {
-            response.sendRedirect(bURL);
-            return null;
-        }
 
-        List<User> users = userService.findAll();
+        List<Vest> vesti = userService.findAll();
 
-        ModelAndView result = new ModelAndView("userPage");
-        result.addObject("user", loggedUser);
-        result.addObject("users", users);
+        ModelAndView result = new ModelAndView("index");
+
+        result.addObject("vesti", vesti);
         return result;
-    }
+    }*/
 
-    @GetMapping(value = "/Registracija")
+    @GetMapping(value = "/registracija")
     public ModelAndView create() {
         ModelAndView result = new ModelAndView("register");
         return result;
     }
 
 
-    @PostMapping(value = "/Registracija")
+    @PostMapping(value = "/registracija")
     public ModelAndView create(@Valid User client, BindingResult bindingResult, HttpServletResponse response) throws IOException {
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
@@ -90,7 +84,7 @@ public class UserController {
         return null;
     }
 
-    @PostMapping(value = "/Login")
+    @PostMapping(value = "/login")
     public ModelAndView postLogin(@RequestParam(required = false) String email, @RequestParam(required = false) String password,
                                   HttpServletResponse response) throws IOException {
         try {
@@ -105,7 +99,7 @@ public class UserController {
             System.out.println("Ulogovan je : " + loggedUser.getName());
             session.setAttribute(UserController.USER_KEY, loggedUser);
 
-            response.sendRedirect(bURL + "Vesti");
+            response.sendRedirect(bURL + "vakcine/");
             return null;
         } catch (Exception ex) {
             // ispis greške
@@ -122,7 +116,7 @@ public class UserController {
         }
     }
 
-    @GetMapping(value="/Logout")
+    @GetMapping(value="/logout")
     public void logout(HttpServletResponse response) throws IOException {
         session.invalidate();
 

@@ -20,5 +20,9 @@ public class Vakcina {
     @Size(min=1)
     private String kolicina;
 
+    @NotBlank(message = "Ne treba da bude prazno polje")
+    @Size(min=1, max=30)
+    private String drzavaProizvodnje;
+
     private ProizvodjacVakcine proizvodjacVakcine;
 }

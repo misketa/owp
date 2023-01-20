@@ -1,10 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" th:replace="~{::centralDiv}" xmlns:th="http://www.thymeleaf.org">
 <head>
+
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>eVakcinacija</title>
+    <style>
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+          width: 100%;
+          border: 1px solid #ddd;
+        }
+
+        th, td {
+          text-align: left;
+          padding: 16px;
+        }
+
+        tr:nth-child(even) {
+          background-color: #f2f2f2;
+        }
+</style>
 </head>
 <body>
+<h3>Poslednje vesti</h3>
 
+<table id="myTable">
+    <thead>
+    <tr>
+        <th>Vest</th>
+        <th>O vesti</th>
+        <th>Vreme objavljivanja</th>
+    </tr>
+    </thead>
+    <tbody>
+    <th:block th:each="vest : ${vesti}">
+        <tr>
+            <td th:text="${vest.naziv}">...</td>
+            <td th:text="${vest.sadrzaj}">...</td>
+            <td th:text="${vest.vremeObjavljivanja}">...</td>
+        </tr>
+    </th:block>
+    </tbody>
+</table>
+
+<a class="nav-link" href="../korisnici/login">Prijavite se</a>
+<a class="nav-link" href="../korisnici/registracija">Registruj se</a>
 </body>
 </html>
