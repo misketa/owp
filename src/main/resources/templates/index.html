@@ -20,31 +20,31 @@
         tr:nth-child(even) {
           background-color: #f2f2f2;
         }
-</style>
+    </style>
 </head>
-<body>
-<h3>Poslednje vesti</h3>
+    <body>
+        <h3>Poslednje vesti</h3>
 
-<table id="myTable">
-    <thead>
-    <tr>
-        <th>Vest</th>
-        <th>O vesti</th>
-        <th>Vreme objavljivanja</th>
-    </tr>
-    </thead>
-    <tbody>
-    <th:block th:each="vest : ${vesti}">
-        <tr>
-            <td th:text="${vest.naziv}">...</td>
-            <td th:text="${vest.sadrzaj}">...</td>
-            <td th:text="${vest.vremeObjavljivanja}">...</td>
-        </tr>
-    </th:block>
-    </tbody>
-</table>
+            <table id="myTable">
+                <thead>
+                <tr>
+                    <th>Vest</th>
+                    <th>O vesti</th>
+                    <th>Vreme objavljivanja</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:each="itVest : ${vesti}">
+                    <tr>
+                        <td th:text="${itVest.naziv}">...</td>
+                        <td th:text="${itVest.sadrzaj}">...</td>
+                        <td th:text="${itVest.vremeObjavljivanja}">...</td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
 
-<a class="nav-link" href="../korisnici/login">Prijavite se</a>
-<a class="nav-link" href="../korisnici/registracija">Registruj se</a>
-</body>
+        <a class="nav-link" href="../korisnici/login">Prijavite se</a>
+        <a class="nav-link" href="../korisnici/registracija">Registruj se</a>
+    </body>
 </html>

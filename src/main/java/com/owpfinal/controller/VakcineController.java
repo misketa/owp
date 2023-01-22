@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
@@ -41,6 +42,19 @@ public class VakcineController {
         result.addObject("vakcinas", vakcinas);
         result.addObject("user", loggedUser);
 
+        return result;
+    }
+
+    @GetMapping(value = "/vakcina")
+    public ModelAndView vakcina(@RequestParam String naziv, HttpServletResponse response) throws IOException {
+
+
+
+        Vakcina vakcina = vakcineService.findOne(naziv);
+
+
+        ModelAndView result = new ModelAndView("pojedinacnaVakcina");
+        result.addObject("singleVakcina", vakcina);
         return result;
     }
 }

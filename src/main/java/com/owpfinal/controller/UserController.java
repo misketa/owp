@@ -14,12 +14,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping(value="/korisnici")
@@ -123,6 +126,61 @@ public class UserController {
         System.out.println("Korisnik odjavljen");
 
         response.sendRedirect(bURL);
+    }
+
+    @GetMapping(value = "/korisnik")
+    public ModelAndView korisnik(@RequestParam String username, HttpServletResponse response) throws IOException {
+
+        User loggedUser = (User) session.getAttribute(UserController.USER_KEY);
+        if (loggedUser == null) {
+            response.sendRedirect(bURL);
+            return null;
+        }
+
+        User user = userService.findOne(username);
+
+
+        ModelAndView result = new ModelAndView("profilKorisnika");
+        result.addObject("user", loggedUser);
+        result.addObject("singleUser", user);
+        return result;
+    }
+
+    @PostMapping(value="/edit")
+    public void edit(@RequestParam(required=false) String name,
+                     @RequestParam(required=false) String lastname,
+                     @RequestParam(required=false) Date dateOfBirth,
+                     @RequestParam(required=false) String email,
+                     @RequestParam(required=false) Role role,
+                     @RequestParam(required=false) String dateOfRegistration,
+                     @RequestParam(required=false) String jmbg,
+                     @RequestParam(required=false) String address,
+                     @RequestParam(required=false) String phone,
+                     @RequestParam(required=false) String password ,HttpSession session, HttpServletResponse response, HttpServletRequest request) throws IOException {
+
+
+        User loggedUser = (User) session.getAttribute(UserController.USER_KEY);
+        if (loggedUser == null) {
+            response.sendRedirect(bURL);
+            return;
+        }
+
+        User user = userService.findOne(email);
+
+        user.setName(name);
+        user.setLastName(lastname);
+        user.setDateOfBirth(dateOfBirth);
+        user.setEmail(email);
+        user.setRole(role);
+        user.setDateOfRegistration(dateOfRegistration);
+        user.setJmbg(jmbg);
+        user.setAddress(address);
+        user.setPhone(phone);
+        user.setPassword(password);
+
+        userService.update(user);
+
+        response.sendRedirect(bURL + "profilKorisnika");
     }
 
 }

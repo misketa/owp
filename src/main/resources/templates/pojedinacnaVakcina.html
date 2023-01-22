@@ -1,10 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" th:replace="~{::centralDiv}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>eVakcinacija</title>
 </head>
 <body>
+    <div th:fragment="centralniDiv">
 
+        <form method="get">
+            <table class="tabela">
+                <caption>
+                    Informacije o vakcini
+                </caption>
+                <thead>
+                <tr>
+                    <th>Naziv</th>
+                    <th>Proizvodjac</th>
+                    <th>Drzava proizvodnje</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:each="itVakcina : ${singleVakcina}">
+                    <tr>
+                        <td  th:text="${singleVakcina.naziv}"></td>
+                        <td  th:text="${singleVakcina.proizvodjac}"></td>
+                        <td  th:text="${singleVakcina.drzavaProizvodnje}"></td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+        </form>
+    </div>
 </body>
 </html>
