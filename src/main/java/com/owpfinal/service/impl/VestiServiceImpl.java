@@ -18,4 +18,9 @@ public class VestiServiceImpl implements VestiService {
     public List<Vest> findAll() {
         return vestiDao.findAll();
     }
+
+    @Override
+    public void save(Vest vest) {
+        vestiDao.save(vest);
+    }
 }

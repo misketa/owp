@@ -41,4 +41,11 @@ public class VestiImpl implements VestiDao {
         String sql = "SELECT * FROM vesti";
         return jdbcTemplate.query(sql, new VestiRowMapper());
     }
+
+    @Override
+    public void save(Vest vest) {
+        String sql = "INSERT INTO vesti (naziv, sadrzaj, vremeObjavljivanja) " +
+                "  VALUES (?, ?, ?)";
+        jdbcTemplate.update(sql, vest.getNaziv(), vest.getSadrzaj(), vest.getVremeObjavljivanja());
+    }
 }
