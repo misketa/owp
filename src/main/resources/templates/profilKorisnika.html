@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{::centralDiv}" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>eVakcinacija</title>
 </head>
 <body>
 
-    <div th:fragment="centralniDiv">
-
-        <form method="get">
+    <div>
+        <form method="get" th:action="@{korisnik}">
             <table class="tabela">
                 <caption>
                     Profil korisnika
@@ -27,28 +26,26 @@
                 </tr>
                 </thead>
                 <tbody>
-                <th:block th:each="itUser : ${singleUser}">
                     <tr>
-                        <td  th:text="${singleUser.name}"></td>
-                        <td  th:text="${singleUser.lastName}"></td>
-                        <td  th:text="${singleUser.dateOfBirth}"></td>
-                        <td  th:text="${singleUser.email}"></td>
-                        <td  th:text="${singleUser.role.toString()}"></td>
-                        <td  th:text="${singleUser.dateOfRegistration}"></td>
-                        <td  th:text="${singleUser.jmbg}"></td>
-                        <td  th:text="${singleUser.address}"></td>
-                        <td  th:text="${singleUser.phone}"></td>
+                        <td  th:text="${user.name}"></td>
+                        <td  th:text="${user.lastName}"></td>
+                        <td  th:text="${user.dateOfBirth}"></td>
+                        <td  th:text="${user.email}"></td>
+                        <td  th:text="${user.role}"></td>
+                        <td  th:text="${user.dateOfRegistration}"></td>
+                        <td  th:text="${user.jmbg}"></td>
+                        <td  th:text="${user.address}"></td>
+                        <td  th:text="${user.phone}"></td>
                     </tr>
-                </th:block>
                 </tbody>
             </table>
         </form>
-
+<!-- th:if="${session.loggedUser != null and !loggedUser.isAdmin()}"  -->
         <div th:each="user : ${user}" th:remove="tag">
             <form
                     method="post"
                     action="korisnici/edit"
-                    th:if="${session.loggedUser != null and !loggedUser.isAdmin()}"
+
             >
                 <input
                         type="hidden"
@@ -68,7 +65,7 @@
                     <tr>
                         <th>Prezime:</th>
                         <td>
-                            <input type="text" th:value="${user.lastname}" name="lastname" />
+                            <input type="text" th:value="${user.lastName}" name="lastname" />
                     </tr>
                     <tr>
                         <th>Datum rodjenja:</th>

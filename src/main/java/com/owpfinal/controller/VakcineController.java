@@ -30,31 +30,32 @@ public class VakcineController {
     @GetMapping(value = "/tabelaVakcina")
     public ModelAndView vakcineTable(HttpServletResponse response) throws IOException {
 
-        User loggedUser = (User) session.getAttribute(UserController.USER_KEY);
+        /*User loggedUser = (User) session.getAttribute(UserController.USER_KEY);
         if (loggedUser == null) {
             response.sendRedirect(bURL);
             return null;
-        }
+        }*/
 
         List<Vakcina> vakcinas = vakcineService.findAll();
+        System.out.println(vakcinas);
 
         ModelAndView result = new ModelAndView("vakcine");
         result.addObject("vakcinas", vakcinas);
-        result.addObject("user", loggedUser);
+        //result.addObject("user", loggedUser);
 
         return result;
     }
 
     @GetMapping(value = "/vakcina")
-    public ModelAndView vakcina(@RequestParam String naziv, HttpServletResponse response) throws IOException {
+    public ModelAndView vakcina(@RequestParam(required=false) String naziv,   HttpServletResponse response) throws IOException {
 
 
 
         Vakcina vakcina = vakcineService.findOne(naziv);
-
+        System.out.println(vakcina);
 
         ModelAndView result = new ModelAndView("pojedinacnaVakcina");
-        result.addObject("singleVakcina", vakcina);
+        result.addObject("vakcina", vakcina);
         return result;
     }
 }

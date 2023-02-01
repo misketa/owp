@@ -1,23 +1,22 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{::centralDiv}" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 
     <meta charset="UTF-8">
     <title>eVakcinacija</title>
 </head>
 <body>
-<div th:fragment="centralDiv">
+<div>
 
 
-    <div class="container login-container">
-        <div class="row">
-            <div class="login-form-1">
-                <h1 th:text="#{eVakcinacija.title}"></h1>
-                <h3 th:text="#{eVakcinacija.caption}"></h3>
+    <div>
+        <div >
+            <div>
+                <h1>Prijavite se</h1>
                 <form method="post" action="korisnici/login">
-                    <input type="text" id="login" class="form-control fadeIn second" name="email" th:placeholder="#{eVakcinacija.email}" required>
-                    <input type="password" id="password" class="form-control fadeIn third" name="password" th:placeholder="#{eVakcinacija.password}" required>
-                    <input type="submit" class="form-control btnSubmit fadeIn fourth" th:value="#{eVakcinacija.login}">
+                    <input type="text" id="login" name="email" placeholder="Email" required>
+                    <input type="password" id="password" class="form-control fadeIn third" name="password" placeholder="Lozinka" required>
+                    <input type="submit">
                 </form>
 
 
@@ -29,6 +28,6 @@
 
 
 </div>
-<a href="korisnici/registracija" th:text="#{eVakcinacija.register}"></a>
+<h3><a href="korisnici/registracija">Nemate nalog? Napravite jedan ovde!</a></h3>
 </body>
 </html>

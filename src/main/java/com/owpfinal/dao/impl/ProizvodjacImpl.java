@@ -42,7 +42,7 @@ public class ProizvodjacImpl implements ProizvodjacDao {
     @Override
     public ProizvodjacVakcine findOne(String proizvodjac) {
         try {
-            String sql = "SELECT * FROM users WHERE email = ?";
+            String sql = "SELECT * FROM proizvodjaci WHERE proizvodjac = ?";
             return jdbcTemplate.queryForObject(sql, new ProizvodjacRowMapper(), proizvodjac);
         } catch (EmptyResultDataAccessException ex) {
             return null;

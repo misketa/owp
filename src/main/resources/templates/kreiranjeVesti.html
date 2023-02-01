@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{::centralDiv}" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>eVakcinacija</title>
@@ -9,7 +9,7 @@
         <div >
             <h3>Kreiranje vesti</h3>
             <form method="post" th:action="@{create}">
-                <table class="forma">
+                <table>
                     <tr>
                         <input type="hidden" name="naziv" />
                         <td th:text="#{eVakcinacija.naziv}"></td>
@@ -23,7 +23,7 @@
                         <td><input type="text" name="vremeObjavljivanja"/></td>
                     </tr>
 
-                    <tr><td></td><td><input type="submit"  th:value="#{eVakcinacija.add}"/></td></tr>
+                    <tr><td></td><td><input type="submit" /></td></tr>
                 </table>
             </form>
         </div>

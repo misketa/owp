@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.PostConstruct;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -33,34 +31,13 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    private ServletContext servletContext;
-
-    @Autowired
     private HttpSession session;
 
     private String bURL;
 
-    @PostConstruct
-    public void init() {
-        bURL = servletContext.getContextPath() + "/";
-    }
-
-
-    /*@GetMapping
-    public ModelAndView index(HttpServletResponse response) throws IOException {
-
-
-        List<Vest> vesti = userService.findAll();
-
-        ModelAndView result = new ModelAndView("index");
-
-        result.addObject("vesti", vesti);
-        return result;
-    }*/
-
     @GetMapping(value = "/registracija")
     public ModelAndView create() {
-        ModelAndView result = new ModelAndView("register");
+        ModelAndView result = new ModelAndView("register1");
         return result;
     }
 
@@ -75,33 +52,41 @@ public class UserController {
         client.setRole(Role.PACIENT);
         client.setDateOfRegistration(dateOfRegistration);
 
-        if (bindingResult.hasErrors()) {
-            ModelAndView error = new ModelAndView("register");
+        /*if (bindingResult.hasErrors()) {
+            ModelAndView error = new ModelAndView("register1");
             error.addObject("client", client);
             return error;
-        }
+        }*/
 
         userService.save(client);
-        response.sendRedirect(bURL);
+        System.out.println(client);
+        response.sendRedirect(bURL + "vakcine");
         return null;
     }
 
+    @GetMapping(value = "/login")
+    public ModelAndView login() {
+        ModelAndView mav = new ModelAndView("login");
+        return mav;
+    }
+
+
     @PostMapping(value = "/login")
-    public ModelAndView postLogin(@RequestParam(required = false) String email, @RequestParam(required = false) String password,
+    public ModelAndView postLogin(@RequestParam String email, @RequestParam String password,  HttpSession session,
                                   HttpServletResponse response) throws IOException {
         try {
             // validacija
-            User loggedUser = userService.checkLogin(email, password);
-            if (loggedUser == null) {
+            User user = userService.checkLogin(email, password);
+            if (user == null) {
                 throw new Exception("Neispravno korisničko ime ili lozinka!");
             }
 
 
             // prijava
-            System.out.println("Ulogovan je : " + loggedUser.getName());
-            session.setAttribute(UserController.USER_KEY, loggedUser);
+            System.out.println("Ulogovan je : " + user.getName());
+            session.setAttribute(UserController.USER_KEY, user);
 
-            response.sendRedirect(bURL + "vakcine/");
+            response.sendRedirect(bURL );
             return null;
         } catch (Exception ex) {
             // ispis greške
@@ -127,21 +112,23 @@ public class UserController {
         response.sendRedirect(bURL);
     }
 
-    @GetMapping(value = "/korisnik")
-    public ModelAndView korisnik(@RequestParam String username, HttpServletResponse response) throws IOException {
 
-        User loggedUser = (User) session.getAttribute(UserController.USER_KEY);
+    @GetMapping(value = "/korisnik")
+    public ModelAndView korisnik(@RequestParam(required = false) String email, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        /*User loggedUser = (User) session.getAttribute(UserController.USER_KEY);
         if (loggedUser == null) {
             response.sendRedirect(bURL);
             return null;
-        }
+        }*/
 
-        User user = userService.findOne(username);
+        User user = userService.findOne(email);
+        System.out.println(user);
 
 
         ModelAndView result = new ModelAndView("profilKorisnika");
-        result.addObject("user", loggedUser);
-        result.addObject("singleUser", user);
+        //result.addObject("user", loggedUser);
+        result.addObject("user", user);
         return result;
     }
 

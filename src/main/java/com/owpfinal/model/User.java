@@ -6,9 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.CascadeType;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -16,6 +20,11 @@ import java.util.Date;
 public class User {
 
     @NotBlank(message = "Ne treba da bude prazno polje")
+    @Size(min=1, max=30)
+    private String id;
+
+    @NotBlank(message = "Ne treba da bude prazno polje")
+    @Size(min=1, max=30)
     private String email;
 
     @NotBlank(message = "Ne treba da bude prazno polje")
@@ -49,6 +58,9 @@ public class User {
     private String dateOfRegistration;
 
     private Role role;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Vakcina> vakcine = new ArrayList<>();
 
     public boolean isAdmin(){
         if (role == Role.ADMIN)

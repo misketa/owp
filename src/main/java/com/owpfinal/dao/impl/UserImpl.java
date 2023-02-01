@@ -69,9 +69,11 @@ public class UserImpl implements UserDao {
     @Override
     public User checkLogin(String email, String password) {
         try {
-            String sql = "SELECT * FROM users WHERE email = ? AND password = ?";
+            String sql = "SELECT email, password, name, lastName, dateOfBirth, jmbg, address, phone," +
+                    "dateOfRegistration, role FROM users WHERE email = ? AND password = ?";
             return jdbcTemplate.queryForObject(sql, new UserRowMapper(), email, password);
         } catch (EmptyResultDataAccessException ex) {
+
             return null;
         }
     }
@@ -109,7 +111,7 @@ public class UserImpl implements UserDao {
                 " dateOfRegistration, role) " +
                 "  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql, user.getEmail(), user.getPassword(), user.getName(),
-                user.getLastName(), user.getDateOfBirth(), user.getAddress(), user.getPhone(), user.getDateOfRegistration(),
+                user.getLastName(), user.getDateOfBirth(), user.getJmbg(), user.getAddress(), user.getPhone(), user.getDateOfRegistration(),
                 user.getRole().toString());
     }
 
