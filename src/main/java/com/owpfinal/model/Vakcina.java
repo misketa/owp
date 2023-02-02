@@ -6,8 +6,7 @@ import lombok.NoArgsConstructor;
 import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Date;
@@ -15,7 +14,14 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class Vakcina {
+
+    @NotBlank(message = "Ne treba da bude prazno polje")
+    @Size(min=1, max=30)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String vakcina_id;
 
     @NotBlank(message = "Ne treba da bude prazno polje")
     @Size(min=1, max=30)
@@ -29,6 +35,7 @@ public class Vakcina {
     @Size(min=1, max=30)
     private String drzavaProizvodnje;
 
+    @OneToOne(mappedBy = "vakcina")
     private ProizvodjacVakcine proizvodjacVakcine;
 
 

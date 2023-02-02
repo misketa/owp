@@ -2,9 +2,6 @@ package com.owpfinal.dao.impl;
 
 import com.owpfinal.dao.VakcinacijaDaO;
 import com.owpfinal.model.PrijavaZaVakcinaciju;
-import com.owpfinal.model.Vakcina;
-import com.owpfinal.model.Vest;
-import com.owpfinal.service.VakcineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -21,8 +18,6 @@ public class VakcinacijaImpl implements VakcinacijaDaO {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    @Autowired
-    private VakcineService vakcineService;
 
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;

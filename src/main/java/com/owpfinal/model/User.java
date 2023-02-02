@@ -6,8 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.CascadeType;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
@@ -17,10 +16,13 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class User {
 
     @NotBlank(message = "Ne treba da bude prazno polje")
     @Size(min=1, max=30)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     @NotBlank(message = "Ne treba da bude prazno polje")
@@ -30,6 +32,10 @@ public class User {
     @NotBlank(message = "Ne treba da bude prazno polje")
     @Size(min=1, max=30)
     private String password;
+
+    @NotBlank(message = "Ne treba da bude prazno polje")
+    @Size(min=1, max=30)
+    private String matchingPassword;
 
 
     @NotBlank(message = "Ne treba da bude prazno polje")

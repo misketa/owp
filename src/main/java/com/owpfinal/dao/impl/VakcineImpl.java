@@ -21,9 +21,17 @@ public class VakcineImpl implements VakcineDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    private ProizvodjacService proizvodjacService;
 
     @Autowired
-    private ProizvodjacService proizvodjacService;
+    public void setProizvodjacService(ProizvodjacService proizvodjacService) {
+        this.proizvodjacService = proizvodjacService;
+    }
+
+    public ProizvodjacService getProizvodjacService() {
+        return proizvodjacService;
+    }
+
 
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;

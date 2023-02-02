@@ -1,15 +1,17 @@
 package com.owpfinal.controller;
 
+import com.owpfinal.dto.RegistrationDto;
 import com.owpfinal.enumeration.Role;
+import com.owpfinal.exception.UserAlreadyExistException;
 import com.owpfinal.model.User;
 import com.owpfinal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,14 +38,24 @@ public class UserController {
     private String bURL;
 
     @GetMapping(value = "/registracija")
-    public ModelAndView create() {
-        ModelAndView result = new ModelAndView("register1");
-        return result;
+    public String  create (WebRequest request, Model model) {
+        RegistrationDto userDto = new RegistrationDto();
+        model.addAttribute("user", userDto);
+        return "register1";
+
     }
 
 
     @PostMapping(value = "/registracija")
-    public ModelAndView create(@Valid User client, BindingResult bindingResult, HttpServletResponse response) throws IOException {
+    public ModelAndView create(@Valid User client, @ModelAttribute("user") @Valid RegistrationDto userDto)  {
+
+        try {
+            User registered = userService.registerNewUserAccount(userDto);
+        } catch (UserAlreadyExistException uaeEx) {
+            ModelAndView mav = new ModelAndView();
+            mav.addObject("message", "An account for that username/email already exists.");
+            return mav;
+        }
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
@@ -52,16 +64,12 @@ public class UserController {
         client.setRole(Role.PACIENT);
         client.setDateOfRegistration(dateOfRegistration);
 
-        /*if (bindingResult.hasErrors()) {
-            ModelAndView error = new ModelAndView("register1");
-            error.addObject("client", client);
-            return error;
-        }*/
-
         userService.save(client);
         System.out.println(client);
-        response.sendRedirect(bURL + "vakcine");
-        return null;
+        //response.sendRedirect(bURL + "vakcine");
+
+        return new ModelAndView("login");
+
     }
 
     @GetMapping(value = "/login")

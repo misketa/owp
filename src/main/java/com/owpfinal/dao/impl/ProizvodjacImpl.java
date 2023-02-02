@@ -12,12 +12,20 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 @Repository
 public class ProizvodjacImpl implements ProizvodjacDao {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    private VakcineService vakcineService;
+
+    @Autowired
+    public void setVakcineService(VakcineService vakcineService) {
+        this.vakcineService = vakcineService;
+    }
 
 
     private class ProizvodjacRowMapper implements RowMapper<ProizvodjacVakcine> {
@@ -27,7 +35,7 @@ public class ProizvodjacImpl implements ProizvodjacDao {
             int index = 1;
             String proizvodjac = rs.getString(index++);
             String drzavaProizvodnje = rs.getString(index++);
-            String vakcina = rs.getString(index++);
+            Vakcina vakcina= vakcineService.findOne (rs.getString(index++));
 
             ProizvodjacVakcine proizvodjacVakcine = new ProizvodjacVakcine();
 
