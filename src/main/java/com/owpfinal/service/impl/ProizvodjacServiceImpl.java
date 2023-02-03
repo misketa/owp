@@ -1,8 +1,7 @@
 package com.owpfinal.service.impl;
 
 import com.owpfinal.dao.ProizvodjacDao;
-import com.owpfinal.dao.VakcineDao;
-import com.owpfinal.model.ProizvodjacVakcine;
+import com.owpfinal.model.Proizvodjaci;
 import com.owpfinal.service.ProizvodjacService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -19,7 +18,7 @@ public class ProizvodjacServiceImpl implements ProizvodjacService {
     }
 
     @Override
-    public ProizvodjacVakcine findOne(String proizvodjac) {
+    public Proizvodjaci findOne(String proizvodjac) {
         return proizvodjacDao.findOne(proizvodjac);
     }
 }

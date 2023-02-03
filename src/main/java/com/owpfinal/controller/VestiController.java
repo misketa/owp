@@ -1,7 +1,7 @@
 package com.owpfinal.controller;
 
 import com.owpfinal.model.User;
-import com.owpfinal.model.Vest;
+import com.owpfinal.model.Vesti;
 import com.owpfinal.service.VestiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -34,18 +33,18 @@ public class VestiController {
     @GetMapping(value = "/vesti")
     public ModelAndView vesti(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        /*User user = (User) request.getSession().getAttribute(UserController.USER_KEY);
+        User user = (User) request.getSession().getAttribute(UserController.USER_KEY);
         if (user == null) {
             response.sendRedirect(bURL);
             return null;
-        }*/
+        }
 
-        List<Vest> vests = vestiService.findAll();
+        List<Vesti> vests = vestiService.findAll();
         System.out.println(vests);
         ModelAndView result = new ModelAndView("vesti");
 
         result.addObject("vests", vests);
-       // result.addObject("user", user);
+       result.addObject("user", user);
         return result;
     }
 
@@ -64,7 +63,7 @@ public class VestiController {
     }
 
     @PostMapping(value = "/create")
-    public ModelAndView create(@Valid Vest vest, BindingResult bindingResult, String naziv, String sadrzaj, String vremeObjavljivanja,
+    public ModelAndView create(@Valid Vesti vest, BindingResult bindingResult, String naziv, String sadrzaj, String vremeObjavljivanja,
                                HttpServletResponse response) throws IOException {
 
         /*User loggedUser = (User) session.getAttribute(UserController.USER_KEY);

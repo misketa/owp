@@ -25,6 +25,6 @@
     </table>
 
 
-    <a  th:if="${session.loggedUser != null and loggedUser.isAdmin()}" href="/vest/create">Kreirajte novu vest</a>
+    <a  th:if="${user.isAdmin()}" href="/vest/create">Kreirajte novu vest</a>
 </body>
 </html>

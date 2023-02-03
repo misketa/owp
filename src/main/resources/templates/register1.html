@@ -13,42 +13,42 @@
     <h3 align="justify">Registracija</h3>
     <div style="width: 55rem; ">
         <div>
-            <form th:action="@{/registracija}" method="post" th:object="${client}">
+            <form th:action="@{/korisnici/registracija}" method="post" th:object="${user}">
                 <div>
                     <label>Email</label>
-                    <input type="text"  aria-describedby="emailHelp" placeholder="email">
+                    <input type="text"  aria-describedby="emailHelp" placeholder="email" th:field="*{email}">
                 </div>
                 <div>
                     <label>Lozinka</label>
-                    <input type="password"  aria-describedby="emailHelp" placeholder="lozinka">
+                    <input type="password"  aria-describedby="emailHelp" placeholder="lozinka" th:field="*{password}">
                 </div>
                 <div>
                     <label>Potvrda lozinke</label>
-                    <input type="password"  aria-describedby="emailHelp" placeholder="ponovljenaLozinka"/>
+                    <input type="password"  aria-describedby="emailHelp" placeholder="ponovljenaLozinka" th:field="*{matchingPassword}"/>
                 </div>
                 <div>
                     <label>Ime</label>
-                    <input type="text"  aria-describedby="emailHelp" placeholder="ime">
+                    <input type="text"  aria-describedby="emailHelp" placeholder="ime" th:field="*{name}">
                 </div>
                 <div>
                     <label>Prezime</label>
-                    <input type="text"  aria-describedby="emailHelp" placeholder="prezime">
+                    <input type="text"  aria-describedby="emailHelp" placeholder="prezime" th:field="*{lastName}">
                 </div>
                 <div>
                     <label>Datum rodjenja</label>
-                    <input type="text"  aria-describedby="emailHelp" placeholder="datum rodjenja">
+                    <input type="text"  aria-describedby="emailHelp" placeholder="datum rodjenja" th:field="*{dateOfBirth}">
                 </div>
                 <div>
                     <label>JMBG</label>
-                    <input type="text"  aria-describedby="emailHelp" placeholder="jmbg">
+                    <input type="text"  aria-describedby="emailHelp" placeholder="jmbg" th:field="*{jmbg}">
                 </div>
                 <div>
                     <label>Adresa</label>
-                    <input type="text"  aria-describedby="emailHelp" placeholder="adresa">
+                    <input type="text"  aria-describedby="emailHelp" placeholder="adresa" th:field="*{address}">
                 </div>
                 <div>
                     <label>Telefon</label>
-                    <input type="text"  aria-describedby="emailHelp" placeholder="telefon">
+                    <input type="text"  aria-describedby="emailHelp" placeholder="telefon" th:field="*{phone}">
                 </div>
         <button type="submit" class="btn btn-primary">Submit</button>
         </form>

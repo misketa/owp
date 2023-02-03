@@ -1,12 +1,12 @@
 package com.owpfinal.service;
 
-import com.owpfinal.model.Vakcina;
+import com.owpfinal.model.Vakcine;
 
 import java.util.List;
 
 public interface VakcineService {
 
-    List<Vakcina> findAll();
+    List<Vakcine> findAll();
 
-    Vakcina findOne(String naziv);
+    Vakcine findOne(String naziv);
 }

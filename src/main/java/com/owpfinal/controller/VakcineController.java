@@ -1,7 +1,6 @@
 package com.owpfinal.controller;
 
-import com.owpfinal.model.User;
-import com.owpfinal.model.Vakcina;
+import com.owpfinal.model.Vakcine;
 import com.owpfinal.service.VakcineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,7 +35,7 @@ public class VakcineController {
             return null;
         }*/
 
-        List<Vakcina> vakcinas = vakcineService.findAll();
+        List<Vakcine> vakcinas = vakcineService.findAll();
         System.out.println(vakcinas);
 
         ModelAndView result = new ModelAndView("vakcine");
@@ -51,7 +50,7 @@ public class VakcineController {
 
 
 
-        Vakcina vakcina = vakcineService.findOne(naziv);
+        Vakcine vakcina = vakcineService.findOne(naziv);
         System.out.println(vakcina);
 
         ModelAndView result = new ModelAndView("pojedinacnaVakcina");

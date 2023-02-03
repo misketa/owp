@@ -47,7 +47,7 @@
                 <a class="nav-link" href="../korisnici/korisnik">Moj profil</a>
             </li>
             <li class="nav-item nav-link">
-                <a class="nav-link" href="../vest/create" th:if="${session.loggedUser != null and loggedUser.isAdmin()}">Kreirajte novu vest</a>
+                <a class="nav-link" href="../vest/create" th:if="${user.isAdmin()}">Kreirajte novu vest</a>
             </li>
             <li class="nav-item nav-link">
                 <a class="nav-link" href="../korisnici/logout">Odjavi se</a>
@@ -81,7 +81,12 @@
             <td th:text="${prijavaZaVakcinaciju.prezime}">...</td>
             <td th:text="${prijavaZaVakcinaciju.jmbg}">...</td>
             <td th:text="${prijavaZaVakcinaciju.vakcina}">...</td>
-            <td><button>Daj vakcinu</button></td>
+            <td>
+                <form method="post" action="dajVakcinu">
+                    <input type="hidden" name = "id" th:value="${prijavaZaVakcinaciju.proizvodjaci.proizvodjacId}">
+                    <button type="submit">Daj vakcinu</button>
+                </form>
+            </td>
         </tr>
     </th:block>
     </tbody>

@@ -1,8 +1,8 @@
 package com.owpfinal.service;
 
-import com.owpfinal.model.ProizvodjacVakcine;
+import com.owpfinal.model.Proizvodjaci;
 
 public interface ProizvodjacService {
 
-    ProizvodjacVakcine findOne(String proizvodjac);
+    Proizvodjaci findOne(String proizvodjac);
 }

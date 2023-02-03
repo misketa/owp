@@ -1,14 +1,17 @@
 package com.owpfinal.service;
 
-import com.owpfinal.model.PrijavaZaVakcinaciju;
-import com.owpfinal.model.Vest;
+import com.owpfinal.model.Prijavezavakcinaciju;
+import com.owpfinal.model.User;
 
 import java.util.List;
 
 public interface VakcinacijaService {
 
-    void save(PrijavaZaVakcinaciju prijavaZaVakcinaciju);
+    void save(Prijavezavakcinaciju prijavaZaVakcinaciju, User user) throws Exception;
 
-    List<PrijavaZaVakcinaciju> findAll();
+    List<Prijavezavakcinaciju> findAll();
 
+    Prijavezavakcinaciju findOne(String string);
+
+    void dajVakcinu(int id);
 }

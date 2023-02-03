@@ -1,9 +1,10 @@
 package com.owpfinal.dao.impl;
 
 import com.owpfinal.dao.VakcineDao;
-import com.owpfinal.model.ProizvodjacVakcine;
-import com.owpfinal.model.Vakcina;
+import com.owpfinal.model.Proizvodjaci;
+import com.owpfinal.model.Vakcine;
 import com.owpfinal.service.ProizvodjacService;
+import com.owpfinal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -32,40 +34,58 @@ public class VakcineImpl implements VakcineDao {
         return proizvodjacService;
     }
 
+    private UserService userService;
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    public UserService getUserService() {
+        return userService;
+    }
+
 
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    private class VakcineRowMapper implements RowMapper<Vakcina> {
+    private class VakcineRowMapper implements RowMapper<Vakcine> {
 
         @Override
-        public Vakcina mapRow(ResultSet rs, int i) throws SQLException {
+        public Vakcine mapRow(ResultSet rs, int i) throws SQLException {
             int index = 1;
+            int vakcina_id = rs.getInt(index++);
             String naziv = rs.getString(index++);
             String kolicina = rs.getString(index++);
             String drzavaProizvodnje = rs.getString(index++);
-            ProizvodjacVakcine proizvodjac = proizvodjacService.findOne(rs.getString(index++));
+            //Proizvodjaci Fk_proizvodjac_id = proizvodjacService.findOne (rs.getString(index++));
+            Date datumPrijemaVakcine = rs.getDate(index++);
+            String brojDoze = rs.getString(index++);
+            //Vakcine vakcinisani_user = userService.findOne (rs.getString(index++));
 
+            Vakcine vakcina = new Vakcine();
 
-            Vakcina vakcina = new Vakcina();
-
+            vakcina.setVakcinaId(vakcina_id);
             vakcina.setNaziv(naziv);
             vakcina.setKolicina(kolicina);
             vakcina.setDrzavaProizvodnje(drzavaProizvodnje);
-            vakcina.setProizvodjacVakcine(proizvodjac);
+            //vakcina.setp(Fk_proizvodjac_id);
+            vakcina.setDatumPrijemaVakcine(datumPrijemaVakcine);
+            vakcina.setBrojDoze(brojDoze);
+            //vakcina.setPrijavezavakcinaciju(vakcinisani_user);
 
             return vakcina;
         }
     }
 
     @Override
-    public List<Vakcina> findAll() {
+    public List<Vakcine> findAll() {
         String sql = "SELECT * FROM vakcine";
         return jdbcTemplate.query(sql, new VakcineRowMapper());
     }
 
     @Override
-    public Vakcina findOne(String naziv) {
+    public Vakcine findOne(String naziv) {
         try {
             String sql = "SELECT * FROM vakcine WHERE naziv = ?";
             return jdbcTemplate.queryForObject(sql, new VakcineRowMapper(), naziv);

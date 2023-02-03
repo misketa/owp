@@ -26,6 +26,7 @@ public class UserImpl implements UserDao {
         @Override
         public User mapRow(ResultSet rs, int i) throws SQLException {
             int index = 1;
+            Integer id = rs.getInt(index++);
             String email = rs.getString(index++);
             String password = rs.getString(index++);
             String name = rs.getString(index++);
@@ -39,6 +40,7 @@ public class UserImpl implements UserDao {
 
             User user = new User();
 
+            user.setId(id);
             user.setEmail(email);
             user.setPassword(password);
             user.setName(name);
@@ -48,7 +50,7 @@ public class UserImpl implements UserDao {
             user.setAddress(address);
             user.setPhone(phone);
             user.setDateOfRegistration(dateOfRegistration);
-            user.setRole(Role.valueOf(role));
+            user.setRole(Role.valueOf(role).name());
 
 
             return user;
@@ -69,8 +71,8 @@ public class UserImpl implements UserDao {
     @Override
     public User checkLogin(String email, String password) {
         try {
-            String sql = "SELECT email, password, name, lastName, dateOfBirth, jmbg, address, phone," +
-                    "dateOfRegistration, role FROM users WHERE email = ? AND password = ?";
+            String sql = "SELECT id, email, password, name, last_name, date_of_birth, jmbg, address, phone," +
+                    "date_of_registration, role FROM users WHERE email = ? AND password = ?";
             return jdbcTemplate.queryForObject(sql, new UserRowMapper(), email, password);
         } catch (EmptyResultDataAccessException ex) {
 

@@ -2,6 +2,7 @@ package com.owpfinal.service.impl;
 
 import com.owpfinal.dao.UserDao;
 import com.owpfinal.dto.RegistrationDto;
+import com.owpfinal.enumeration.Role;
 import com.owpfinal.exception.UserAlreadyExistException;
 import com.owpfinal.model.User;
 import com.owpfinal.repository.UserRepository;
@@ -10,7 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Arrays;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Transactional
@@ -39,16 +44,26 @@ public class UserServiceImpl implements UserService {
             throw new UserAlreadyExistException("There is an account with that email address: "
                     + userDto.getEmail());
         }
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        String dateOfRegistration = dtf.format(now);
 
         User user = new User();
         user.setName(userDto.getName());
         user.setLastName(userDto.getLastName());
         user.setPassword(userDto.getPassword());
         user.setEmail(userDto.getEmail());
-        user.setPhone(userDto.getEmail());
-        user.setAddress(userDto.getEmail());
-        user.setJmbg(userDto.getEmail());
-        user.setDateOfBirth(userDto.getDateOfBirth());
+        user.setPhone(userDto.getPhone());
+        user.setAddress(userDto.getAddress());
+        user.setJmbg(userDto.getJmbg());
+        DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+        try {
+            user.setDateOfBirth(df.parse(userDto.getDateOfBirth()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        user.setRole(Role.PACIENT.name());
+        user.setDateOfRegistration(dateOfRegistration);
 
         return userRepository.save(user);
 

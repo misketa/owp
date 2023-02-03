@@ -1,12 +1,12 @@
 package com.owpfinal.dao;
 
-import com.owpfinal.model.Vakcina;
+import com.owpfinal.model.Vakcine;
 
 import java.util.List;
 
 public interface VakcineDao {
 
-    public List<Vakcina> findAll();
+    public List<Vakcine> findAll();
 
-    public Vakcina findOne(String naziv);
+    public Vakcine findOne(String naziv);
 }

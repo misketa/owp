@@ -1,7 +1,7 @@
 package com.owpfinal.service.impl;
 
 import com.owpfinal.dao.VakcineDao;
-import com.owpfinal.model.Vakcina;
+import com.owpfinal.model.Vakcine;
 import com.owpfinal.service.VakcineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -21,12 +21,12 @@ public class VakcineServiceImpl implements VakcineService {
     }
 
     @Override
-    public List<Vakcina> findAll() {
+    public List<Vakcine> findAll() {
         return vakcineDao.findAll();
     }
 
     @Override
-    public Vakcina findOne(String naziv) {
+    public Vakcine findOne(String naziv) {
         return vakcineDao.findOne(naziv);
     }
 }

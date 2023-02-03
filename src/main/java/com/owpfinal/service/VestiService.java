@@ -1,13 +1,12 @@
 package com.owpfinal.service;
 
-import com.owpfinal.model.User;
-import com.owpfinal.model.Vest;
+import com.owpfinal.model.Vesti;
 
 import java.util.List;
 
 public interface VestiService {
 
-    List<Vest> findAll();
+    List<Vesti> findAll();
 
-    void save(Vest vest);
+    void save(Vesti vest);
 }

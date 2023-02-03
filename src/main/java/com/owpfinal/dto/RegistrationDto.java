@@ -32,7 +32,7 @@ public class RegistrationDto {
 
     @NotNull
     @NotEmpty
-    private Date dateOfBirth;
+    private String dateOfBirth;
 
     @NotNull
     @NotEmpty

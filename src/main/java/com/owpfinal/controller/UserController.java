@@ -8,8 +8,6 @@ import com.owpfinal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,12 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @Controller
-@RequestMapping(value="/korisnici")
+@RequestMapping(value = "/korisnici")
 public class UserController {
 
     public static final String USER_KEY = "loggedUser";
@@ -38,7 +34,7 @@ public class UserController {
     private String bURL;
 
     @GetMapping(value = "/registracija")
-    public String  create (WebRequest request, Model model) {
+    public String create(WebRequest request, Model model) {
         RegistrationDto userDto = new RegistrationDto();
         model.addAttribute("user", userDto);
         return "register1";
@@ -47,29 +43,15 @@ public class UserController {
 
 
     @PostMapping(value = "/registracija")
-    public ModelAndView create(@Valid User client, @ModelAttribute("user") @Valid RegistrationDto userDto)  {
-
+    public ModelAndView create(@ModelAttribute("user") @Valid RegistrationDto userDto) {
         try {
-            User registered = userService.registerNewUserAccount(userDto);
+            userService.registerNewUserAccount(userDto);
         } catch (UserAlreadyExistException uaeEx) {
             ModelAndView mav = new ModelAndView();
             mav.addObject("message", "An account for that username/email already exists.");
             return mav;
         }
-
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();
-        String dateOfRegistration = dtf.format(now);
-
-        client.setRole(Role.PACIENT);
-        client.setDateOfRegistration(dateOfRegistration);
-
-        userService.save(client);
-        System.out.println(client);
-        //response.sendRedirect(bURL + "vakcine");
-
         return new ModelAndView("login");
-
     }
 
     @GetMapping(value = "/login")
@@ -80,7 +62,7 @@ public class UserController {
 
 
     @PostMapping(value = "/login")
-    public ModelAndView postLogin(@RequestParam String email, @RequestParam String password,  HttpSession session,
+    public ModelAndView postLogin(@RequestParam String email, @RequestParam String password, HttpSession session,
                                   HttpServletResponse response) throws IOException {
         try {
             // validacija
@@ -94,7 +76,7 @@ public class UserController {
             System.out.println("Ulogovan je : " + user.getName());
             session.setAttribute(UserController.USER_KEY, user);
 
-            response.sendRedirect(bURL );
+            response.sendRedirect(bURL);
             return null;
         } catch (Exception ex) {
             // ispis greške
@@ -111,7 +93,7 @@ public class UserController {
         }
     }
 
-    @GetMapping(value="/logout")
+    @GetMapping(value = "/logout")
     public void logout(HttpServletResponse response) throws IOException {
         session.invalidate();
 
@@ -140,17 +122,17 @@ public class UserController {
         return result;
     }
 
-    @PostMapping(value="/edit")
-    public void edit(@RequestParam(required=false) String name,
-                     @RequestParam(required=false) String lastname,
-                     @RequestParam(required=false) Date dateOfBirth,
-                     @RequestParam(required=false) String email,
-                     @RequestParam(required=false) Role role,
-                     @RequestParam(required=false) String dateOfRegistration,
-                     @RequestParam(required=false) String jmbg,
-                     @RequestParam(required=false) String address,
-                     @RequestParam(required=false) String phone,
-                     @RequestParam(required=false) String password ,HttpSession session, HttpServletResponse response, HttpServletRequest request) throws IOException {
+    @PostMapping(value = "/edit")
+    public void edit(@RequestParam(required = false) String name,
+                     @RequestParam(required = false) String lastname,
+                     @RequestParam(required = false) Date dateOfBirth,
+                     @RequestParam(required = false) String email,
+                     @RequestParam(required = false) Role role,
+                     @RequestParam(required = false) String dateOfRegistration,
+                     @RequestParam(required = false) String jmbg,
+                     @RequestParam(required = false) String address,
+                     @RequestParam(required = false) String phone,
+                     @RequestParam(required = false) String password, HttpSession session, HttpServletResponse response, HttpServletRequest request) throws IOException {
 
 
         User loggedUser = (User) session.getAttribute(UserController.USER_KEY);
@@ -165,7 +147,7 @@ public class UserController {
         user.setLastName(lastname);
         user.setDateOfBirth(dateOfBirth);
         user.setEmail(email);
-        user.setRole(role);
+        user.setRole(role.name());
         user.setDateOfRegistration(dateOfRegistration);
         user.setJmbg(jmbg);
         user.setAddress(address);
