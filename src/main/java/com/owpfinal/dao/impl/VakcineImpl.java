@@ -58,10 +58,7 @@ public class VakcineImpl implements VakcineDao {
             String naziv = rs.getString(index++);
             String kolicina = rs.getString(index++);
             String drzavaProizvodnje = rs.getString(index++);
-            //Proizvodjaci Fk_proizvodjac_id = proizvodjacService.findOne (rs.getString(index++));
-            Date datumPrijemaVakcine = rs.getDate(index++);
-            String brojDoze = rs.getString(index++);
-            //Vakcine vakcinisani_user = userService.findOne (rs.getString(index++));
+
 
             Vakcine vakcina = new Vakcine();
 
@@ -69,10 +66,7 @@ public class VakcineImpl implements VakcineDao {
             vakcina.setNaziv(naziv);
             vakcina.setKolicina(kolicina);
             vakcina.setDrzavaProizvodnje(drzavaProizvodnje);
-            //vakcina.setp(Fk_proizvodjac_id);
-            vakcina.setDatumPrijemaVakcine(datumPrijemaVakcine);
-            vakcina.setBrojDoze(brojDoze);
-            //vakcina.setPrijavezavakcinaciju(vakcinisani_user);
+
 
             return vakcina;
         }

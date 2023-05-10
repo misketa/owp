@@ -61,7 +61,8 @@ public class UserImpl implements UserDao {
     @Override
     public User findOne(String email) {
         try {
-            String sql = "SELECT * FROM users WHERE email = ?";
+            String sql = "SELECT  id, email, password, name, last_name, date_of_birth, jmbg, address, phone, " +
+                    "date_of_registration, role FROM users WHERE email = ?";
             return jdbcTemplate.queryForObject(sql, new UserRowMapper(), email);
         } catch (EmptyResultDataAccessException ex) {
             return null;
@@ -87,7 +88,6 @@ public class UserImpl implements UserDao {
     }
 
 
-
     @Override
     public List<User> find(String email) {
 
@@ -97,7 +97,7 @@ public class UserImpl implements UserDao {
 
         StringBuffer whereSql = new StringBuffer(" WHERE ");
 
-        if(email != null) {
+        if (email != null) {
             email = "%" + email + "%";
             whereSql.append(" AND ");
             whereSql.append("email LIKE ?");
@@ -119,10 +119,20 @@ public class UserImpl implements UserDao {
 
     @Override
     public void update(User user) {
-        String sql = "UPDATE users SET email = ?, password = ?, name = ?, lastName = ?, dateOfBirth = ?, address = ?, phone = ?," +
-                " dateOfRegistration = ?, role = ? WHERE email like ?";
+        String sql = "UPDATE users SET email = ?, password = ?, name = ?, last_name = ?, date_of_birth = ?, address = ?, phone = ?" +
+                " WHERE id = ?";
         jdbcTemplate.update(sql, user.getEmail(), user.getPassword(), user.getName(), user.getLastName(),
-                user.getDateOfBirth(), user.getAddress(), user.getPhone(), user.getDateOfRegistration(),
-                user.getRole().toString());
+                user.getDateOfBirth(), user.getAddress(), user.getPhone(), user.getId());
+    }
+
+    @Override
+    public User findById(Long id) {
+        try {
+            String sql = "SELECT  id, email, password, name, last_name, date_of_birth, jmbg, address, phone, " +
+                    "date_of_registration, role FROM users WHERE id = ?";
+            return jdbcTemplate.queryForObject(sql, new UserRowMapper(), id);
+        } catch (EmptyResultDataAccessException ex) {
+            return null;
+        }
     }
 }

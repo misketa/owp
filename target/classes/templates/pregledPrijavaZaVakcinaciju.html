@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>eVakcinacija</title>
+    <style>
+        table {
+          border-spacing: 0;
+          width: 100%;
+          border: 1px solid #ddd;
+        }
+
+        th {
+          cursor: pointer;
+        }
+
+        th, td {
+          text-align: left;
+          padding: 16px;
+        }
+
+        tr:nth-child(even) {
+          background-color: #f2f2f2
+        }
+        #myNaziv,#myProizvodjac,#myDrzava, #myKolicina  {
+          background-image: url('/css/searchicon.png');
+          background-position: 10px 10px;
+          background-repeat: no-repeat;
+          width: 100%;
+          height: 10px;
+          font-size: 16px;
+          padding: 12px 20px 12px 40px;
+          border: 1px solid #ddd;
+          margin-bottom: 12px;
+        }
+
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="title navbar-brand" href="/">eVakcinacija</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item nav-link">
+                <a class="nav-link" href="../korisnici/korisnik">Moj profil</a>
+            </li>
+            <li class="nav-item nav-link">
+                <a class="nav-link" href="../vest/create" th:if="${user.isAdmin()}">Kreirajte novu vest</a>
+            </li>
+            <li class="nav-item nav-link">
+                <a class="nav-link" href="../korisnici/logout">Odjavi se</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<br>
+
+<h2>Prikaz prijava za vakcinaciju</h2>
+
+<input type="text" id="myIme" onkeyup="myFunction()" style="width:50%;" placeholder="Pretrazi po imenu.."
+       title="Ukucaj ime">
+<input type="text" id="myPrezime" onkeyup="searchPrezime()" style="width:50%;" placeholder="Pretrazi po prezimenu.."
+       title="Ukucaj prezime">
+<input type="text" id="myJmbg" onkeyup="searchJmbg()" style="width:50%;" placeholder="Pretrazi po jmbg-u.."
+       title="Ukucaj JMBG">
+
+
+<table id="myTable">
+    <thead>
+    <tr>
+        <th>Ime</th>
+        <th>Prezime</th>
+        <th>JMBG</th>
+        <th>Vakcina</th>
+        <th>Davanje vakcine</th>
+    </tr>
+    </thead>
+    <tbody>
+    <th:block th:each="prijavaZaVakcinaciju : ${prijavaZaVakcinacijus}">
+        <tr>
+            <td th:text="${prijavaZaVakcinaciju.ime}"></td>
+            <td th:text="${prijavaZaVakcinaciju.prezime}">...</td>
+            <td th:text="${prijavaZaVakcinaciju.jmbg}">...</td>
+            <td th:text="${prijavaZaVakcinaciju.vakcina}">...</td>
+            <td>
+                <form method="post" action="dajVakcinu">
+                    <input type="hidden" name="id" th:value="${prijavaZaVakcinaciju.proizvodjaci.proizvodjacId}">
+                    <button type="submit">Daj vakcinu</button>
+                </form>
+            </td>
+        </tr>
+    </th:block>
+    </tbody>
+</table>
+
+
+<script>
+function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myIme");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+
+</script>
+
+<script>
+function searchJmbg() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myJmbg");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[2];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+
+</script>
+
+<script>
+function searchPrezime() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myPrezime");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[1];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+
+</script>
+
+
+</body>
+</html>

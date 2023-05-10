@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>eVakcinacija</title>
+</head>
+<body>
+<div>
+    <form method="get">
+        <table class="tabela">
+            <caption>
+                Informacije o vakcini
+            </caption>
+            <thead>
+            <tr>
+                <th>Naziv</th>
+                <th>Kolicina</th>
+                <th>Drzava proizvodnje</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block><!---th:each="vakcina : ${vakcina}"-->
+                <tr>
+                    <td th:text="${'Naziv : ' + vakcina.naziv}"></td>
+                    <td th:text="${'Kolicina : ' + vakcina.kolicina}"></td>
+                    <td th:text="${'Drzava proizvodnje : ' + vakcina.drzavaProizvodnje}"></td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </form>
+</div>
+</body>
+</html>

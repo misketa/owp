@@ -9,13 +9,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @SpringBootApplication
 public class OwpFinalApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(OwpFinalApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(OwpFinalApplication.class, args);
+    }
 
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
 }

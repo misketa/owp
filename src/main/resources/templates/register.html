@@ -5,65 +5,69 @@
     <title>eVakcinacija</title>
 </head>
 <body>
-    <div>
-        <div th:if="${client == null}">
-            <div>
-                <h1>Registracija</h1>
-                <form method="post" th:action="@{registracija}">
-                    <table>
-                        <h6>Negde ste ostavili prazno polje</h6>
-                        <tr>
-                            <td>E-mail</td>
-                            <td><input type="email" name="email" th:field="*{client.email}"/></td>
-                            <td><b colspan="2" th:if="${#fields.hasErrors('client.email')}">Prazno polje</b></td>
-                        </tr>
-                        <tr>
-                            <td>Lozinka</td>
-                            <td><input type="text" name="password" th:field="*{client.password}"/></td>
-                            <td><b colspan="2" th:if="${#fields.hasErrors('client.password')}">Prazno polje</b></td>
-                        </tr>
-                        <tr>
-                            <td>Ime</td>
-                            <td><input type="text" name="name" th:field="*{client.name}"/></td>
-                            <td><b colspan="2" th:if="${#fields.hasErrors('client.name')}">Prazno polje</b></td>
-                        </tr>
-                        <tr>
-                            <td>Prezime</td>
-                            <td><input type="text" name="lastname" th:field="*{client.lastname}"/></td>
-                            <td><b colspan="2" th:if="${#fields.hasErrors('client.lastname')}">Prazno polje</b></td>
-                        </tr>
-                        <tr>
-                            <td>Datum rodjenja</td>
-                            <td><input type="date" name="dateOfBirth" th:field="*{client.dateOfBirth}"/></td>
-                            <td><b colspan="2" th:if="${#fields.hasErrors('client.dateOfBirth')}">Prazno polje</b></td>
-                        </tr>
-                        <tr>
-                            <td>JMBG</td>
-                            <td><input type="text" name="jmbg" th:field="*{client.jmbg}"/></td>
-                            <td><b colspan="2" th:if="${#fields.hasErrors('client.jmbg')}">Prazno polje</b></td>
-                        </tr>
-                        <tr>
-                            <td>Adresa</td>
-                            <td><input type="text" name="address" th:field="*{client.address}"/></td>
-                            <td><b colspan="2" th:if="${#fields.hasErrors('client.address')}">Prazno polje</b></td>
-                        </tr>
-                        <tr>
-                            <td>Telefon</td>
-                            <td><input type="text" name="phone" th:field="*{client.phone}"/></td>
-                            <td><b colspan="2" th:if="${#fields.hasErrors('client.phone')}">Prazno polje</b></td>
-                        </tr>
-                        <tr>
-                            <td>Datum registracije</td>
-                            <td><input type="text" name="dateOfRegistration" th:field="*{client.dateOfRegistration}"/></td>
-                            <td><b colspan="2" th:if="${#fields.hasErrors('client.dateOfRegistration')}">Prazno polje</b></td>
-                        </tr>
+<div>
+    <div th:if="${client == null}">
+        <div>
+            <h1>Registracija</h1>
+            <form method="post" th:action="@{registracija}">
+                <table>
+                    <h6>Negde ste ostavili prazno polje</h6>
+                    <tr>
+                        <td>E-mail</td>
+                        <td><input type="email" name="email" th:field="*{client.email}"/></td>
+                        <td><b colspan="2" th:if="${#fields.hasErrors('client.email')}">Prazno polje</b></td>
+                    </tr>
+                    <tr>
+                        <td>Lozinka</td>
+                        <td><input type="text" name="password" th:field="*{client.password}"/></td>
+                        <td><b colspan="2" th:if="${#fields.hasErrors('client.password')}">Prazno polje</b></td>
+                    </tr>
+                    <tr>
+                        <td>Ime</td>
+                        <td><input type="text" name="name" th:field="*{client.name}"/></td>
+                        <td><b colspan="2" th:if="${#fields.hasErrors('client.name')}">Prazno polje</b></td>
+                    </tr>
+                    <tr>
+                        <td>Prezime</td>
+                        <td><input type="text" name="lastname" th:field="*{client.lastname}"/></td>
+                        <td><b colspan="2" th:if="${#fields.hasErrors('client.lastname')}">Prazno polje</b></td>
+                    </tr>
+                    <tr>
+                        <td>Datum rodjenja</td>
+                        <td><input type="date" name="dateOfBirth" th:field="*{client.dateOfBirth}"/></td>
+                        <td><b colspan="2" th:if="${#fields.hasErrors('client.dateOfBirth')}">Prazno polje</b></td>
+                    </tr>
+                    <tr>
+                        <td>JMBG</td>
+                        <td><input type="text" name="jmbg" th:field="*{client.jmbg}"/></td>
+                        <td><b colspan="2" th:if="${#fields.hasErrors('client.jmbg')}">Prazno polje</b></td>
+                    </tr>
+                    <tr>
+                        <td>Adresa</td>
+                        <td><input type="text" name="address" th:field="*{client.address}"/></td>
+                        <td><b colspan="2" th:if="${#fields.hasErrors('client.address')}">Prazno polje</b></td>
+                    </tr>
+                    <tr>
+                        <td>Telefon</td>
+                        <td><input type="text" name="phone" th:field="*{client.phone}"/></td>
+                        <td><b colspan="2" th:if="${#fields.hasErrors('client.phone')}">Prazno polje</b></td>
+                    </tr>
+                    <tr>
+                        <td>Datum registracije</td>
+                        <td><input type="text" name="dateOfRegistration" th:field="*{client.dateOfRegistration}"/></td>
+                        <td><b colspan="2" th:if="${#fields.hasErrors('client.dateOfRegistration')}">Prazno polje</b>
+                        </td>
+                    </tr>
 
-                        <tr><th></th><td><input type="submit" th:value="#{eVakcinacija.register}"/></td></tr>
-                    </table>
-                </form>
-            </div>
+                    <tr>
+                        <th></th>
+                        <td><input type="submit" th:value="#{eVakcinacija.register}"/></td>
+                    </tr>
+                </table>
+            </form>
         </div>
     </div>
+</div>
 
 </body>
 </html>

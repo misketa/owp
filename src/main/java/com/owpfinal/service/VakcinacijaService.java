@@ -14,4 +14,6 @@ public interface VakcinacijaService {
     Prijavezavakcinaciju findOne(String string);
 
     void dajVakcinu(int id);
+
+    List<Prijavezavakcinaciju> findAllByUserId(Long userId);
 }

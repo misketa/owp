@@ -2,11 +2,10 @@ package com.owpfinal.service.impl;
 
 import com.owpfinal.dao.ProizvodjacDao;
 import com.owpfinal.dao.VakcinacijaDaO;
-import com.owpfinal.dao.VakcineDao;
 import com.owpfinal.model.Prijavezavakcinaciju;
 import com.owpfinal.model.Proizvodjaci;
 import com.owpfinal.model.User;
-import com.owpfinal.model.Vakcine;
+import com.owpfinal.repository.PrijaveRepository;
 import com.owpfinal.service.VakcinacijaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +22,9 @@ public class VakcinacijaServiceImpl implements VakcinacijaService {
     private VakcinacijaDaO vakcinacijaDaO;
 
     @Autowired
+    private PrijaveRepository prijaveRepository;
+
+    @Autowired
     private ProizvodjacDao proizvodjaciDao;
 
     @Override
@@ -32,7 +34,7 @@ public class VakcinacijaServiceImpl implements VakcinacijaService {
             throw new Exception("Nepoznat proizvodjac vakcine");
         }
 
-        if(proizvodjaci.getKolicina() == 0){
+        if (proizvodjaci.getKolicina() == 0) {
             throw new Exception("Nema vakcina na stanju");
         }
 
@@ -101,5 +103,10 @@ public class VakcinacijaServiceImpl implements VakcinacijaService {
     @Override
     public void dajVakcinu(int id) {
         proizvodjaciDao.smanjiKolicinu(id);
+    }
+
+    @Override
+    public List<Prijavezavakcinaciju> findAllByUserId(Long userId) {
+        return prijaveRepository.findAllPrijavezavakcinacijusByUserId(userId);
     }
 }

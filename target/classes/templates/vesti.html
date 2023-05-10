@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>eVakcinacija</title>
+</head>
+<body>
+<nav>
+    <a href="/">eVakcinacija</a>
+    <button type="button">
+        <span></span>
+    </button>
+    <div>
+        <ul>
+            <li>
+                <a href="../korisnici/korisnik">Moj profil</a>
+            </li>
+            <li>
+                <a href="../vakcinacija/create">Prijava za vakcinaciju</a>
+            </li>
+
+            <li>
+                <a href="../vest/create">Kreirajte novu vest</a>
+            </li>
+
+            <li>
+                <a href="../vakcinacija/prijaveZaVakcinaciju">Pregledajte prijave za vakcinaciju</a>
+            </li>
+
+            <li>
+                <a href="../korisnici/logout">Odjavi se</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<br>
+<table>
+    <thead>
+    <tr>
+        <th>Naziv</th>
+        <th>Sadrzaj</th>
+        <th>Vreme objavljivanja</th>
+    </tr>
+    </thead>
+    <tbody>
+    <th:block th:each="vest : ${vests}">
+        <tr>
+            <td th:text="${vest.naziv}">...</td>
+            <td th:text="${vest.sadrzaj}">...</td>
+            <td th:text="${vest.vremeObjavljivanja}">...</td>
+        </tr>
+    </th:block>
+    </tbody>
+</table>
+
+
+</body>
+</html>

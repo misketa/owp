@@ -1,10 +1,12 @@
 package com.owpfinal.controller;
 
+
 import com.owpfinal.dto.RegistrationDto;
-import com.owpfinal.enumeration.Role;
 import com.owpfinal.exception.UserAlreadyExistException;
+import com.owpfinal.model.Prijavezavakcinaciju;
 import com.owpfinal.model.User;
 import com.owpfinal.service.UserService;
+import com.owpfinal.service.VakcinacijaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +19,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "/korisnici")
@@ -27,6 +32,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private VakcinacijaService vakcinacijaService;
 
     @Autowired
     private HttpSession session;
@@ -76,8 +84,7 @@ public class UserController {
             System.out.println("Ulogovan je : " + user.getName());
             session.setAttribute(UserController.USER_KEY, user);
 
-            response.sendRedirect(bURL);
-            return null;
+            return new ModelAndView("vesti");
         } catch (Exception ex) {
             // ispis greške
             String message = ex.getMessage();
@@ -104,59 +111,89 @@ public class UserController {
 
 
     @GetMapping(value = "/korisnik")
-    public ModelAndView korisnik(@RequestParam(required = false) String email, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public ModelAndView korisnik(HttpSession session) throws IOException {
 
-        /*User loggedUser = (User) session.getAttribute(UserController.USER_KEY);
+        User loggedUser = (User) session.getAttribute(UserController.USER_KEY);
         if (loggedUser == null) {
-            response.sendRedirect(bURL);
-            return null;
-        }*/
+            ModelAndView mav = new ModelAndView("login");
+            return mav;
+        }
 
-        User user = userService.findOne(email);
+        User user = userService.findOne(loggedUser.getEmail());
         System.out.println(user);
 
 
         ModelAndView result = new ModelAndView("profilKorisnika");
-        //result.addObject("user", loggedUser);
         result.addObject("user", user);
+        result.addObject("error", "");
+
+        return result;
+    }
+
+
+    @GetMapping(value = "/{id}/prijave")
+    public ModelAndView getAllUsersAplications(@PathVariable Long id) {
+        User user = userService.findById(id);
+        List<Prijavezavakcinaciju> prijave = vakcinacijaService.findAllByUserId(id);
+
+        ModelAndView result = new ModelAndView("klijentovePrijave");
+        result.addObject("user", user);
+        result.addObject("prijave", prijave);
+
         return result;
     }
 
     @PostMapping(value = "/edit")
-    public void edit(@RequestParam(required = false) String name,
-                     @RequestParam(required = false) String lastname,
-                     @RequestParam(required = false) Date dateOfBirth,
-                     @RequestParam(required = false) String email,
-                     @RequestParam(required = false) Role role,
-                     @RequestParam(required = false) String dateOfRegistration,
-                     @RequestParam(required = false) String jmbg,
-                     @RequestParam(required = false) String address,
-                     @RequestParam(required = false) String phone,
-                     @RequestParam(required = false) String password, HttpSession session, HttpServletResponse response, HttpServletRequest request) throws IOException {
+    public ModelAndView edit(@RequestParam(required = false) String name,
+                             @RequestParam(required = false) String lastname,
+                             @RequestParam(required = false) String dateOfBirth,
+                             @RequestParam(required = false) String email,
+                             @RequestParam(required = false) String jmbg,
+                             @RequestParam(required = false) String address,
+                             @RequestParam(required = false) String phone,
+                             @RequestParam(required = false) String password,
+                             @RequestParam(required = false) String matchingPassword,
+                             HttpSession session) throws IOException {
 
 
         User loggedUser = (User) session.getAttribute(UserController.USER_KEY);
         if (loggedUser == null) {
-            response.sendRedirect(bURL);
-            return;
+            ModelAndView mav = new ModelAndView("login");
+            return mav;
         }
 
         User user = userService.findOne(email);
 
         user.setName(name);
         user.setLastName(lastname);
-        user.setDateOfBirth(dateOfBirth);
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            user.setDateOfBirth(df.parse(dateOfBirth));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         user.setEmail(email);
-        user.setRole(role.name());
-        user.setDateOfRegistration(dateOfRegistration);
         user.setJmbg(jmbg);
         user.setAddress(address);
         user.setPhone(phone);
         user.setPassword(password);
 
+        ModelAndView result = new ModelAndView("profilKorisnika");
+
+        if (!password.equals(matchingPassword)) {
+            result.addObject("user", loggedUser);
+            result.addObject("error", "passowrdi se ne podudaraju");
+            return result;
+        } else {
+            result.addObject("user", user);
+            result.addObject("error", "");
+        }
+
+
         userService.update(user);
 
-        response.sendRedirect(bURL + "profilKorisnika");
+        return result;
     }
+
 
 }

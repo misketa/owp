@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>eVakcinacija</title>
+    <style>
+        table {
+          border-spacing: 0;
+          width: 100%;
+          border: 1px solid #ddd;
+        }
+
+        th {
+          cursor: pointer;
+        }
+
+        th, td {
+          text-align: left;
+          padding: 16px;
+        }
+
+        tr:nth-child(even) {
+          background-color: #f2f2f2
+        }
+        #myNaziv,#myDrzava, #myKolicina  {
+          background-image: url('/css/searchicon.png');
+          background-position: 10px 10px;
+          background-repeat: no-repeat;
+          width: 100%;
+          height: 10px;
+          font-size: 16px;
+          padding: 12px 20px 12px 40px;
+          border: 1px solid #ddd;
+          margin-bottom: 12px;
+        }
+
+    </style>
+</head>
+<body>
+<h2>Prikaz dnevnih izvestaja</h2>
+
+
+<table id="myTable">
+    <thead>
+    <tr>
+        <th>Broj hospitalizovanih</th>
+        <th>Obolelih u poslednja 24h</th>
+        <th>Pacijenti na respiratoru</th>
+        <th>Testiranih u poslednja 24h</th>
+        <th>Ukupno obolelih od starta</th>
+        <th>Vreme objavljivanja</th>
+    </tr>
+    </thead>
+    <tbody>
+    <th:block th:each="vestiOObolelima : ${vestiOObolelimas}">
+        <tr>
+            <td th:text="${vestiOObolelima.brojHospitalizovanih}"></td>
+            <td th:text="${vestiOObolelima.oboleliUPoslednja24h}">...</td>
+            <td th:text="${vestiOObolelima.pacijentiNaRespiratoru}">...</td>
+            <td th:text="${vestiOObolelima.testiraniUPoslednja24h}">...</td>
+            <td th:text="${vestiOObolelima.ukupnoObolelihOdStarta}">...</td>
+            <td th:text="${vestiOObolelima.vremeObjavljivanja}">...</td>
+        </tr>
+    </th:block>
+    </tbody>
+</table>
+
+</body>
+</html>

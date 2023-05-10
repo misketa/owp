@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Controller
-@RequestMapping(value="/vakcine")
+@RequestMapping(value = "/vakcine")
 public class VakcineController {
 
     @Autowired
@@ -46,8 +46,7 @@ public class VakcineController {
     }
 
     @GetMapping(value = "/vakcina")
-    public ModelAndView vakcina(@RequestParam(required=false) String naziv,   HttpServletResponse response) throws IOException {
-
+    public ModelAndView vakcina(@RequestParam(required = false) String naziv, HttpServletResponse response) throws IOException {
 
 
         Vakcine vakcina = vakcineService.findOne(naziv);

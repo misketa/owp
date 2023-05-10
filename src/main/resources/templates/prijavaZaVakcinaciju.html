@@ -10,7 +10,7 @@
         <div>
             <label th:text="${error}"></label>
             <h1>Prijava</h1>
-            <form method="post" th:action="@{create}"  th:object="${prijava}">
+            <form method="post" th:action="@{create}" th:object="${prijava}">
                 <table>
 
                     <tr>
@@ -34,7 +34,10 @@
 
                     </tr>
 
-                    <tr><th></th><td><input type="submit"/></td></tr>
+                    <tr>
+                        <th></th>
+                        <td><input type="submit"/></td>
+                    </tr>
                 </table>
             </form>
         </div>

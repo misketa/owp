@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>eVakcinacija</title>
+</head>
+<body>
+
+<div>
+
+    <table class="tabela">
+        <caption>
+            Profil korisnika
+        </caption>
+        <thead>
+        <tr>
+            <th>Ime</th>
+            <th>Prezime</th>
+            <th>Datum rodjenja</th>
+            <th>Email</th>
+            <th>Uloga</th>
+            <th>Datum registracije</th>
+            <th>JMBG</th>
+            <th>Adresa</th>
+            <th>Telefon</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.lastName}"></td>
+            <td th:text="${user.dateOfBirth}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.role}"></td>
+            <td th:text="${user.dateOfRegistration}"></td>
+            <td th:text="${user.jmbg}"></td>
+            <td th:text="${user.address}"></td>
+            <td th:text="${user.phone}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <label th:text="${error}"></label>
+    <!-- th:if="${session.loggedUser != null and !loggedUser.isAdmin()}"  -->
+    <div th:each="user : ${user}" th:remove="tag">
+        <form
+                method="post"
+                action="edit"
+
+        >
+
+            <table class="forma">
+                <caption>
+                    Izmena podataka
+                </caption>
+                <tr>
+                    <th>Ime:</th>
+                    <td>
+                        <input type="text" th:value="${user.name}" name="name"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Prezime:</th>
+                    <td>
+                        <input type="text" th:value="${user.lastName}" name="lastname"/>
+                </tr>
+                <tr>
+                    <th>Datum rodjenja:</th>
+                    <td>
+                        <input type="text" th:value="${user.dateOfBirth}" name="dateOfBirth"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Email:</th>
+                    <td>
+                        <input type="text" th:value="${user.email}" name="email"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>JMBG:</th>
+                    <td>
+                        <input type="text" th:value="${user.jmbg}" name="jmbg"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Adresa:</th>
+                    <td>
+                        <input type="text" th:value="${user.address}" name="address"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Telefon:</th>
+                    <td>
+                        <input type="text" th:value="${user.phone}" name="phone"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Lozinka:</th>
+                    <td>
+                        <input type="text" th:value="${user.password}" name="password"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Ponovljena lozinka:</th>
+                    <td>
+                        <input type="text" th:value="${user.password}" name="matchingPassword"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td><input type="submit" value="Izmeni"/></td>
+                </tr>
+            </table>
+        </form>
+
+    </div>
+</div>
+
+</body>
+</html>

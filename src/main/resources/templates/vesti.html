@@ -5,26 +5,54 @@
     <title>eVakcinacija</title>
 </head>
 <body>
-    <table>
-        <thead>
+<nav>
+    <a href="/">eVakcinacija</a>
+    <button type="button">
+        <span></span>
+    </button>
+    <div>
+        <ul>
+            <li>
+                <a href="../korisnici/korisnik">Moj profil</a>
+            </li>
+            <li>
+                <a href="../vakcinacija/create">Prijava za vakcinaciju</a>
+            </li>
+
+            <li>
+                <a href="../vest/create">Kreirajte novu vest</a>
+            </li>
+
+            <li>
+                <a href="../vakcinacija/prijaveZaVakcinaciju">Pregledajte prijave za vakcinaciju</a>
+            </li>
+
+            <li>
+                <a href="../korisnici/logout">Odjavi se</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<br>
+<table>
+    <thead>
+    <tr>
+        <th>Naziv</th>
+        <th>Sadrzaj</th>
+        <th>Vreme objavljivanja</th>
+    </tr>
+    </thead>
+    <tbody>
+    <th:block th:each="vest : ${vests}">
         <tr>
-            <th>Naziv</th>
-            <th>Sadrzaj</th>
-            <th>Vreme objavljivanja</th>
+            <td th:text="${vest.naziv}">...</td>
+            <td th:text="${vest.sadrzaj}">...</td>
+            <td th:text="${vest.vremeObjavljivanja}">...</td>
         </tr>
-        </thead>
-        <tbody>
-        <th:block th:each="vest : ${vests}">
-            <tr>
-                <td th:text="${vest.naziv}">...</td>
-                <td th:text="${vest.sadrzaj}">...</td>
-                <td th:text="${vest.vremeObjavljivanja}">...</td>
-            </tr>
-        </th:block>
-        </tbody>
-    </table>
+    </th:block>
+    </tbody>
+</table>
 
 
-    <a  th:if="${user.isAdmin()}" href="/vest/create">Kreirajte novu vest</a>
 </body>
 </html>

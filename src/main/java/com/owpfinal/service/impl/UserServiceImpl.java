@@ -68,6 +68,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
 
     }
+
     private boolean emailExists(String email) {
         return userRepository.findByEmail(email) != null;
     }
@@ -80,11 +81,23 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public List<User> find(String email) { return userDao.find(email); }
+    public List<User> find(String email) {
+        return userDao.find(email);
+    }
 
     @Override
-    public void save(User user) { userDao.save(user); }
+    public void save(User user) {
+        userDao.save(user);
+    }
 
     @Override
-    public void update(User user) { userDao.update(user); }
+    public void update(User user) {
+        userDao.update(user);
+    }
+
+    @Override
+    public User findById(Long id) {
+        return userDao.findById(id);
+    }
 }
+

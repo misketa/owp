@@ -22,7 +22,7 @@
         tr:nth-child(even) {
           background-color: #f2f2f2
         }
-        #myNaziv,#myProizvodjac,#myDrzava, #myKolicina  {
+        #myNaziv,#myDrzava, #myKolicina  {
           background-image: url('/css/searchicon.png');
           background-position: 10px 10px;
           background-repeat: no-repeat;
@@ -33,25 +33,24 @@
           border: 1px solid #ddd;
           margin-bottom: 12px;
         }
+
     </style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="title navbar-brand" href="/">eVakcinacija</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+<nav>
+    <a href="/">eVakcinacija</a>
+    <button type="button">
+        <span></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item nav-link">
-                <a class="nav-link" href="../korisnici/korisnik">Moj profil</a>
+    <div>
+        <ul>
+            <li>
+                <a href="../korisnici/korisnik">Moj profil</a>
             </li>
-            <li class="nav-item nav-link">
-                <a class="nav-link" href="../vest/create" th:if="${session.loggedUser != null and loggedUser.isAdmin()}">Kreirajte novu vest</a>
-            </li>
-            <li class="nav-item nav-link">
-                <a class="nav-link" href="../korisnici/logout">Odjavi se</a>
+
+            <li>
+                <a href="../korisnici/logout">Odjavi se</a>
             </li>
         </ul>
     </div>
@@ -60,36 +59,36 @@
 
 <h2>Prikaz vakcina</h2>
 
-<input type="text" id="myNaziv" onkeyup="myFunction()" style="width:50%;" placeholder="Pretrazi po nazivu.." title="Ukucaj naziv">
-<input type="text" id="myProizvodjac" onkeyup="searchProizvodjac()" style="width:50%;" placeholder="Pretrazi po proizvodjacu.." title="Ukucaj proizvodjaca">
-<input type="text" id="myDrzava" onkeyup="searchDrzava()" style="width:50%;" placeholder="Pretrazi po drzavi proizvodnje.." title="Ukucaj drzavu proizvodnje">
-<input type="text" id="myKolicina" onkeyup="searchKolicina()" style="width:50%;" placeholder="Pretrazi po kolicini.." title="Ukucaj kolicinu">
+<input type="text" id="myNaziv" onkeyup="myFunction()" style="width:50%;" placeholder="Pretrazi po nazivu.."
+       title="Ukucaj naziv">
+<input type="text" id="myDrzava" onkeyup="searchDrzava()" style="width:50%;"
+       placeholder="Pretrazi po drzavi proizvodnje.." title="Ukucaj drzavu proizvodnje">
+<input type="text" id="myKolicina" onkeyup="searchKolicina()" style="width:50%;" placeholder="Pretrazi po kolicini.."
+       title="Ukucaj kolicinu">
 
 <h3>Za sortiranje kliknuti na naziv kolone</h3>
 
 <table id="myTable">
     <thead>
-        <tr>
-            <!--When a header is clicked, run the sortTable function, with a parameter, 0 for sorting by names, 1 for sorting by country:-->
-            <th onclick="sortTable(0)">Naziv</th>
-            <th onclick="sortTable(1)">Proizvodjac</th>
-            <th onclick="sortTable(2)">Drzava proizvodnje</th>
-            <th onclick="sortTable(3)">Kolicina</th>
-        </tr>
+    <tr>
+        <!--When a header is clicked, run the sortTable function, with a parameter, 0 for sorting by names, 1 for sorting by country:-->
+        <th onclick="sortTable(0)">Naziv</th>
+        <th onclick="sortTable(2)">Drzava proizvodnje</th>
+        <th onclick="sortTable(3)">Kolicina</th>
+    </tr>
     </thead>
     <tbody>
-        <th:block th:each="vakcina : ${vakcinas}">
-            <tr>
-                <td><a  href="th:text=${vakcina.naziv}"></a></td>
-                <td th:text="${vakcina.proizvodjacVakcine}">...</td>
-                <td th:text="${vakcina.drzavaProizvodnje}">...</td>
-                <td th:text="${vakcina.kolicina}">...</td>
-            </tr>
-        </th:block>
+    <th:block th:each="vakcina : ${vakcinas}">
+        <tr>
+            <td th:text="${vakcina.naziv}"></td>
+            <td th:text="${vakcina.drzavaProizvodnje}">...</td>
+            <td th:text="${vakcina.kolicina}">...</td>
+        </tr>
+    </th:block>
     </tbody>
 </table>
 
-<a  href="../korisnici/login">Prijavite se</a>
+<a href="../korisnici/login">Prijavite se</a>
 
 <script>
 function myFunction() {
@@ -110,12 +109,13 @@ function myFunction() {
     }
   }
 }
+
 </script>
 
 <script>
-function searchProizvodjac() {
+function searchDrzava() {
   var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("myProizvodjac");
+  input = document.getElementById("myDrzava");
   filter = input.value.toUpperCase();
   table = document.getElementById("myTable");
   tr = table.getElementsByTagName("tr");
@@ -131,7 +131,31 @@ function searchProizvodjac() {
     }
   }
 }
+
 </script>
+
+<script>
+function searchKolicina() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myKolicina");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[2];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+
+</script>
+
 
 <script>
 function sortTable(n) {
@@ -188,6 +212,7 @@ function sortTable(n) {
     }
   }
 }
+
 </script>
 </body>
 </html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>eVakcinacija</title>
+</head>
+<body>
+<div>
+    <div th:if="${user != null}">
+        <div>
+            <label th:text="${error}"></label>
+            <h1>Prijava</h1>
+            <form method="post" th:action="@{create}" th:object="${prijava}">
+                <table>
+
+                    <tr>
+                        <td>Ime</td>
+                        <td><input type="text" name="ime" placeholder="ime" th:field="*{ime}"/></td>
+
+                    </tr>
+                    <tr>
+                        <td>Prezime</td>
+                        <td><input type="text" name="prezime" placeholder="prezime" th:field="*{prezime}"/></td>
+
+                    </tr>
+                    <tr>
+                        <td>JMBG</td>
+                        <td><input type="text" name="jmbg" placeholder="jmbg" th:field="*{jmbg}"/></td>
+
+                    </tr>
+                    <tr>
+                        <td>Vakcina</td>
+                        <td><input type="text" name="vakcina" placeholder="vakcina" th:field="*{vakcina}"/></td>
+
+                    </tr>
+
+                    <tr>
+                        <th></th>
+                        <td><input type="submit"/></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

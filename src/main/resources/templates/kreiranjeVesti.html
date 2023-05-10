@@ -5,29 +5,33 @@
     <title>eVakcinacija</title>
 </head>
 <body>
-    <div >
-        <div >
-            <h3>Kreiranje vesti</h3>
-            <form method="post" th:action="@{create}">
-                <table>
-                    <tr>
-                        <input type="hidden" name="naziv" />
-                        <td th:text="#{eVakcinacija.naziv}"></td>
-                        <td><input type="text" name="naziv"/></td>
-                    </tr>
-                    <tr>
-                        <td th:text="#{eVakcinacija.sadrzaj}"></td>
-                        <td><input type="text" name="sadrzaj"/></td></tr>
-                    <tr>
-                        <td th:text="#{eVakcinacija.vremeObjavljivanja}"></td>
-                        <td><input type="text" name="vremeObjavljivanja"/></td>
-                    </tr>
+<div>
+    <div>
+        <h3>Kreiranje vesti</h3>
+        <form method="post" th:action="@{create}">
+            <table>
+                <tr>
+                    <input type="hidden" name="naziv"/>
+                    <td th:text="#{eVakcinacija.naziv}"></td>
+                    <td><input type="text" name="naziv"/></td>
+                </tr>
+                <tr>
+                    <td th:text="#{eVakcinacija.sadrzaj}"></td>
+                    <td><input type="text" name="sadrzaj"/></td>
+                </tr>
+                <tr>
+                    <td th:text="#{eVakcinacija.vremeObjavljivanja}"></td>
+                    <td><input type="text" name="vremeObjavljivanja"/></td>
+                </tr>
 
-                    <tr><td></td><td><input type="submit" /></td></tr>
-                </table>
-            </form>
-        </div>
+                <tr>
+                    <td></td>
+                    <td><input type="submit"/></td>
+                </tr>
+            </table>
+        </form>
     </div>
+</div>
 
 </body>
 </html>

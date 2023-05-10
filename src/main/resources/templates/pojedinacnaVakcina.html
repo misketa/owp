@@ -5,32 +5,30 @@
     <title>eVakcinacija</title>
 </head>
 <body>
-    <div>
-        <form method="get">
-            <table class="tabela">
-                <caption>
-                    Informacije o vakcini
-                </caption>
-                <thead>
+<div>
+    <form method="get">
+        <table class="tabela">
+            <caption>
+                Informacije o vakcini
+            </caption>
+            <thead>
+            <tr>
+                <th>Naziv</th>
+                <th>Kolicina</th>
+                <th>Drzava proizvodnje</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block><!---th:each="vakcina : ${vakcina}"-->
                 <tr>
-                    <th>Naziv</th>
-                    <th>Kolicina</th>
-                    <th>Drzava proizvodnje</th>
-                    <th>Proizvodjac</th>
+                    <td th:text="${'Naziv : ' + vakcina.naziv}"></td>
+                    <td th:text="${'Kolicina : ' + vakcina.kolicina}"></td>
+                    <td th:text="${'Drzava proizvodnje : ' + vakcina.drzavaProizvodnje}"></td>
                 </tr>
-                </thead>
-                <tbody>
-                <th:block><!---th:each="vakcina : ${vakcina}"-->
-                    <tr>
-                        <td  th:text="${'Naziv : ' + vakcina.naziv}"></td>
-                        <td  th:text="${'Kolicina : ' + vakcina.kolicina}"></td>
-                        <td  th:text="${'Drzava proizvodnje : ' + vakcina.drzavaProizvodnje}"></td>
-                        <td  th:text="${'Proizvodjac : ' + vakcina.proizvodjacVakcine}"></td>
-                    </tr>
-                </th:block>
-                </tbody>
-            </table>
-        </form>
-    </div>
+            </th:block>
+            </tbody>
+        </table>
+    </form>
+</div>
 </body>
 </html>

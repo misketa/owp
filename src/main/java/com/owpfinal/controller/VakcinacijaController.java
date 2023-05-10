@@ -94,7 +94,7 @@ public class VakcinacijaController {
 
     @PostMapping(value = "/dajVakcinu")
     public ModelAndView dajVakcinu(@RequestParam int id, HttpSession session, HttpServletRequest request,
-                                  HttpServletResponse response) throws IOException {
+                                   HttpServletResponse response) throws IOException {
         try {
             // validacija
             User user = (User) request.getSession().getAttribute(UserController.USER_KEY);

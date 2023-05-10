@@ -1,5 +1,6 @@
 package com.owpfinal.controller;
 
+import com.owpfinal.enumeration.Role;
 import com.owpfinal.model.User;
 import com.owpfinal.model.Vesti;
 import com.owpfinal.service.VestiService;
@@ -19,7 +20,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Controller
-@RequestMapping(value="/vest")
+@RequestMapping(value = "/vest")
 public class VestiController {
 
     @Autowired
@@ -44,21 +45,22 @@ public class VestiController {
         ModelAndView result = new ModelAndView("vesti");
 
         result.addObject("vests", vests);
-       result.addObject("user", user);
+        result.addObject("user", user);
         return result;
     }
 
     @GetMapping(value = "/create")
     public ModelAndView create(HttpServletResponse response) throws IOException {
 
-        /*User loggedUser = (User) session.getAttribute(UserController.USER_KEY);
-        if (loggedUser == null) {
+        User loggedUser = (User) session.getAttribute(UserController.USER_KEY);
+        if (loggedUser == null || !loggedUser.getRole().equals(Role.ADMIN.name())) {
             response.sendRedirect(bURL);
             return null;
-        }*/
+        }
+
 
         ModelAndView result = new ModelAndView("kreiranjeVesti");
-        //result.addObject("user", loggedUser);
+        result.addObject("user", loggedUser);
         return result;
     }
 
@@ -66,21 +68,22 @@ public class VestiController {
     public ModelAndView create(@Valid Vesti vest, BindingResult bindingResult, String naziv, String sadrzaj, String vremeObjavljivanja,
                                HttpServletResponse response) throws IOException {
 
-        /*User loggedUser = (User) session.getAttribute(UserController.USER_KEY);
-        if (loggedUser == null) {
+        User loggedUser = (User) session.getAttribute(UserController.USER_KEY);
+        if (loggedUser == null || !loggedUser.getRole().equals(Role.ADMIN.name())) {
             response.sendRedirect(bURL);
             return null;
         }
-*/
+
         vest.setNaziv(vest.getNaziv());
         vest.setSadrzaj(vest.getSadrzaj());
         vest.setVremeObjavljivanja(vest.getVremeObjavljivanja());
+        vest.setUser(vest.getUser());
 
 
         if (bindingResult.hasErrors()) {
             ModelAndView error = new ModelAndView("failedLogin");
             System.out.println(vest);
-            //error.addObject("user", loggedUser);
+            error.addObject("user", loggedUser);
             return error;
         }
 
