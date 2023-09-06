@@ -12,4 +12,9 @@ public interface VakcinacijaDaO {
 
     List<Prijavezavakcinaciju> findAllByUser(int userId);
 
+    Prijavezavakcinaciju findOne(int id);
+
+    void obrisiPrijavu(int id);
+
+    List<Prijavezavakcinaciju>findAllByUserId(int userId);
 }

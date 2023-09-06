@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>eVakcinacija</title>
+</head>
+<body>
+<div>
+    <div>
+        <h3>Kreiranje vakcine</h3>
+        <form method="post" th:action="@{create}" th:object="${vakcina}">
+            <table>
+                <tr>
+                    <td>Drzava proizvodnje</td>
+                    <td><input type="text" name="drzavaProizvodnje" placeholder="drzava Proizvodnje" th:field="*{drzavaProizvodnje}"/></td>
+
+                </tr>
+                <tr>
+                    <td>Naziv</td>
+                    <td><input type="text" name="naziv" placeholder="naziv" th:field="*{naziv}"/></td>
+
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit"/></td>
+                </tr>
+            </table>
+        </form>
+
+
+    </div>
+</div>
+
+</body>
+</html>

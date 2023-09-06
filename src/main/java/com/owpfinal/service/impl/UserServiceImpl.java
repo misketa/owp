@@ -1,6 +1,7 @@
 package com.owpfinal.service.impl;
 
 import com.owpfinal.dao.UserDao;
+import com.owpfinal.dao.VakcinacijaDaO;
 import com.owpfinal.dto.RegistrationDto;
 import com.owpfinal.enumeration.Role;
 import com.owpfinal.exception.UserAlreadyExistException;
@@ -24,6 +25,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private VakcinacijaDaO vakcinacijaDaO;
 
     @Autowired
     private UserRepository userRepository;
@@ -96,8 +100,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findById(Long id) {
+    public User findById(int id) {
         return userDao.findById(id);
+    }
+
+    @Override
+    public void otkaziPrijavu(int id) {
+        vakcinacijaDaO.obrisiPrijavu(id);
     }
 }
 

@@ -2,6 +2,7 @@ package com.owpfinal.service;
 
 import com.owpfinal.model.Prijavezavakcinaciju;
 import com.owpfinal.model.User;
+import com.owpfinal.model.Vakcine;
 
 import java.util.List;
 
@@ -15,5 +16,9 @@ public interface VakcinacijaService {
 
     void dajVakcinu(int id);
 
-    List<Prijavezavakcinaciju> findAllByUserId(Long userId);
+    List<Prijavezavakcinaciju> findAllByUserId(int userId);
+
+    void deleteVakcinacija(int id);
+
+
 }

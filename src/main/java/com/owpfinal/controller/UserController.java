@@ -2,6 +2,7 @@ package com.owpfinal.controller;
 
 
 import com.owpfinal.dto.RegistrationDto;
+import com.owpfinal.enumeration.Role;
 import com.owpfinal.exception.UserAlreadyExistException;
 import com.owpfinal.model.Prijavezavakcinaciju;
 import com.owpfinal.model.User;
@@ -40,6 +41,13 @@ public class UserController {
     private HttpSession session;
 
     private String bURL;
+
+
+    @GetMapping("/hello")
+    public void sayHello() {
+        System.out.println("HELLo");
+    }
+
 
     @GetMapping(value = "/registracija")
     public String create(WebRequest request, Model model) {
@@ -122,7 +130,6 @@ public class UserController {
         User user = userService.findOne(loggedUser.getEmail());
         System.out.println(user);
 
-
         ModelAndView result = new ModelAndView("profilKorisnika");
         result.addObject("user", user);
         result.addObject("error", "");
@@ -130,17 +137,55 @@ public class UserController {
         return result;
     }
 
+    @GetMapping(value = "/prijave/{id}")
+    public ModelAndView getAllUsersAplications(@PathVariable("id") String id) {
 
-    @GetMapping(value = "/{id}/prijave")
-    public ModelAndView getAllUsersAplications(@PathVariable Long id) {
-        User user = userService.findById(id);
-        List<Prijavezavakcinaciju> prijave = vakcinacijaService.findAllByUserId(id);
+        User user = userService.findById(4);
+        System.out.println(user);
+        List<Prijavezavakcinaciju> prijave = vakcinacijaService.findAllByUserId(Integer.parseInt(id));
+        System.out.println(prijave);
 
         ModelAndView result = new ModelAndView("klijentovePrijave");
         result.addObject("user", user);
         result.addObject("prijave", prijave);
 
         return result;
+    }
+
+    @PostMapping(value = "/otkaziPrijavu")
+    public ModelAndView otkaziPrijavu(@RequestParam int id, @RequestParam int vakcinacijaId, HttpSession session, HttpServletRequest request,
+                                   HttpServletResponse response) throws IOException {
+        try {
+            // validacija
+            User user = (User) request.getSession().getAttribute(UserController.USER_KEY);
+
+            if (user == null || !user.getRole().equals(Role.PACIENT.name())) {
+                response.sendRedirect(bURL);
+                return null;
+            }
+
+            vakcinacijaService.deleteVakcinacija(vakcinacijaId);
+
+            List<Prijavezavakcinaciju> prijave = vakcinacijaService.findAllByUserId(id);
+            System.out.println(prijave);
+            ModelAndView result = new ModelAndView("klijentovePrijave");
+
+            result.addObject("prijave", prijave);
+            result.addObject("user", user);
+            return result;
+        } catch (Exception ex) {
+            // ispis greške
+            String message = ex.getMessage();
+            if (message.isEmpty()) {
+                message = "Neuspešna prijava!";
+            }
+
+            // prosleđivanje
+            ModelAndView result = new ModelAndView("failedLogin");
+            result.addObject("message", message);
+
+            return result;
+        }
     }
 
     @PostMapping(value = "/edit")

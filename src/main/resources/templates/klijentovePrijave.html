@@ -2,9 +2,82 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>eVakciancija</title>
+    <title>eVakcinacija</title>
+    <style>
+        table {
+          border-spacing: 0;
+          width: 100%;
+          border: 1px solid #ddd;
+        }
+
+        th {
+          cursor: pointer;
+        }
+
+        th, td {
+          text-align: left;
+          padding: 16px;
+        }
+
+        tr:nth-child(even) {
+          background-color: #f2f2f2
+        }
+        #myNaziv,#myProizvodjac,#myDrzava, #myKolicina  {
+          background-image: url('/css/searchicon.png');
+          background-position: 10px 10px;
+          background-repeat: no-repeat;
+          width: 100%;
+          height: 10px;
+          font-size: 16px;
+          padding: 12px 20px 12px 40px;
+          border: 1px solid #ddd;
+          margin-bottom: 12px;
+        }
+
+    </style>
 </head>
 <body>
+
+<h2>Prikaz prijava za vakcinaciju</h2>
+
+
+<table id="myTable">
+    <thead>
+    <tr>
+        <th>Ime</th>
+        <th>Prezime</th>
+        <th>JMBG</th>
+        <th>Broj doze</th>
+        <th>Vreme</th>
+        <th>*</th>
+    </tr>
+    </thead>
+    <tbody>
+    <th:block th:each="klijentovePrijave : ${prijave}">
+        <tr>
+            <td th:text="${klijentovePrijave.ime}"></td>
+            <td th:text="${klijentovePrijave.prezime}">...</td>
+            <td th:text="${klijentovePrijave.jmbg}">...</td>
+            <td th:text="${klijentovePrijave.brojDoze}">...</td>
+            <td th:text="${klijentovePrijave.vreme}">...</td>
+            <td>
+                <form method="post" th:action="@{/korisnici/otkaziPrijavu(id=${user.id},vakcinacijaId=${klijentovePrijave.id})}">
+<!--                    <input type="hidden" name="id" th:value="${prijavaZaVakcinaciju.proizvodjaci.proizvodjacId}">-->
+                    <button type="submit" >Otkazi prijavu</button>
+                </form>
+            </td>
+        </tr>
+    </th:block>
+    </tbody>
+</table>
+
+<script>
+    function deleteRow(button) {
+        var row = button.parentNode.parentNode; // Get the parent row of the button
+        row.parentNode.removeChild(row); // Remove the row from the table
+    }
+</script>
+
 
 </body>
 </html>

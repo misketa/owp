@@ -28,7 +28,7 @@ public class ProizvodjacImpl implements ProizvodjacDao {
         public Proizvodjaci mapRow(ResultSet rs, int i) throws SQLException {
             int index = 1;
             Integer proizvodjac_id = rs.getInt(index++);
-            String proizvodjac = rs.getString(index++);
+//            String proizvodjac = rs.getString(index++);
             String drzavaProizvodnje = rs.getString(index++);
             int kolicina = rs.getInt(index++);
             //Prijavezavakcinaciju prijavezavakcinaciju= vakcinacijaService.findOne (rs.getString(index++));
@@ -36,7 +36,7 @@ public class ProizvodjacImpl implements ProizvodjacDao {
             Proizvodjaci proizvodjacVakcine = new Proizvodjaci();
 
             proizvodjacVakcine.setProizvodjacId(proizvodjac_id);
-            proizvodjacVakcine.setProizvodjac(proizvodjac);
+//            proizvodjacVakcine.setProizvodjac(proizvodjac);
             proizvodjacVakcine.setDrzavaProizvodnje(drzavaProizvodnje);
             proizvodjacVakcine.setKolicina(kolicina);
             //proizvodjacVakcine.setPrijavezavakcinacijus(prijavezavakcinaciju);

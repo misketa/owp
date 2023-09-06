@@ -5,6 +5,7 @@ import com.owpfinal.model.Prijavezavakcinaciju;
 import com.owpfinal.model.Proizvodjaci;
 import com.owpfinal.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -80,6 +81,32 @@ public class VakcinacijaImpl implements VakcinacijaDaO {
     public List<Prijavezavakcinaciju> findAllByUser(int userId) {
         String sql = "SELECT * FROM prijavezavakcinaciju WHERE users_id = " + userId;
         return jdbcTemplate.query(sql, new VakcinacijaRowMapper());
+    }
+
+    @Override
+    public Prijavezavakcinaciju findOne(int id) {
+        try {
+            String sql = "SELECT * FROM prijavezavakcinaciju WHERE id = ?";
+            return jdbcTemplate.queryForObject(sql, new VakcinacijaRowMapper(), id);
+        } catch (EmptyResultDataAccessException ex) {
+            return null;
+        }
+    }
+
+    @Override
+    public void obrisiPrijavu(int id) {
+        String sql = "DELETE FROM prijavezavakcinaciju WHERE id = ?";
+        jdbcTemplate.update(sql, id);
+    }
+
+    @Override
+    public List<Prijavezavakcinaciju> findAllByUserId(int userId) {
+        try {
+            String sql = "SELECT * FROM prijavezavakcinaciju WHERE users_id = ?";
+            return jdbcTemplate.query(sql, new VakcinacijaRowMapper(), userId);
+        } catch (EmptyResultDataAccessException ex) {
+            return null;
+        }
     }
 
 

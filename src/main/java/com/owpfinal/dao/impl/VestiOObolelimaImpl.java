@@ -50,4 +50,11 @@ public class VestiOObolelimaImpl implements VestiOObolelimaDao {
         String sql = "SELECT * FROM vesti_o_obolelima";
         return jdbcTemplate.query(sql, new VestiOObolelimaRowMapper());
     }
+
+    @Override
+    public void save(VestiOObolelima vestiOObolelima) {
+        String sql = "INSERT INTO vesti_o_obolelima (brojHospitalizovanih, oboleliUPoslednja24h, pacijentiNaRespiratoru, testiraniUPoslednja24h, ukupnoObolelihOdStarta, vremeObjavljivanja) " +
+                "  VALUES (?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, vestiOObolelima.getBrojHospitalizovanih(), vestiOObolelima.getOboleliUPoslednja24h(), vestiOObolelima.getPacijentiNaRespiratoru(), vestiOObolelima.getTestiraniUPoslednja24h(), vestiOObolelima.getUkupnoObolelihOdStarta(), vestiOObolelima.getVremeObjavljivanja());
+    }
 }

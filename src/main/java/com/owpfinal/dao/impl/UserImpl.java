@@ -126,7 +126,7 @@ public class UserImpl implements UserDao {
     }
 
     @Override
-    public User findById(Long id) {
+    public User findById(int id) {
         try {
             String sql = "SELECT  id, email, password, name, last_name, date_of_birth, jmbg, address, phone, " +
                     "date_of_registration, role FROM users WHERE id = ?";

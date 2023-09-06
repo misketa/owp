@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>eVakcinacija</title>
+</head>
+<body>
+<div>
+    <div>
+        <h3>Kreiranje dnevnog izvestaja</h3>
+        <form method="post" th:action="@{create}" th:object="${izvestaj}">
+            <table>
+                <tr>
+                    <td>Broj hospitalizovanih </td>
+                    <td><input type="text" name="brojHospitalizovanih" placeholder="broj hospitalizovanih" th:field="*{brojHospitalizovanih}"/></td>
+
+                </tr>
+                <tr>
+                    <td>Obolelih u poslednja 24h</td>
+                    <td><input type="text" name="oboleliUPoslednja24h" placeholder="oboleli U Poslednja 24h" th:field="*{oboleliUPoslednja24h}"/></td>
+
+                </tr>
+                <tr>
+                    <td>Pacijenti na respiratoru</td>
+                    <td><input type="text" name="pacijentiNaRespiratoru" placeholder="pacijenti Na Respiratoru" th:field="*{pacijentiNaRespiratoru}"/></td>
+
+                </tr>
+                <tr>
+                    <td>Testiranih u poslednja 24h</td>
+                    <td><input type="text" name="testiraniUPoslednja24h" placeholder="testirani U Poslednja 24h" th:field="*{testiraniUPoslednja24h}"/></td>
+
+                </tr>
+                <tr>
+                    <td>Ukupno obolelih od starta</td>
+                    <td><input type="text" name="ukupnoObolelihOdStarta" placeholder="ukupno Obolelih Od Starta" th:field="*{ukupnoObolelihOdStarta}"/></td>
+
+                </tr>
+                <tr>
+                    <td>Datum i vreme objavljivanja</td>
+                    <td><input type="text" name="vremeObjavljivanja" placeholder="vreme Objavljivanja" th:field="*{vremeObjavljivanja}"/></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit"/></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

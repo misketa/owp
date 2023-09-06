@@ -19,7 +19,7 @@
             </tr>
             </thead>
             <tbody>
-            <th:block><!---th:each="vakcina : ${vakcina}"-->
+            <th:block th:each="vakcina : ${vakcina}">
                 <tr>
                     <td th:text="${'Naziv : ' + vakcina.naziv}"></td>
                     <td th:text="${'Kolicina : ' + vakcina.kolicina}"></td>
@@ -29,6 +29,36 @@
             </tbody>
         </table>
     </form>
+
+    <div th:each="vakcina : ${vakcina}" th:remove="tag">
+        <form
+                method="post"
+
+
+        >
+
+            <table class="forma">
+                <caption>
+                    Izmena podataka
+                </caption>
+                <tr>
+                    <th>Naziv:</th>
+                    <td>
+                        <input type="text" th:value="${vakcina.naziv}" name="naziv"/>
+                    </td>
+                    <th>Drzava proizvodnje:</th>
+                    <td>
+                        <input type="text" th:value="${vakcina.drzavaProizvodnje}" name="drzavaProizvodnje"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td><input type="submit" value="Izmeni"/></td>
+                </tr>
+            </table>
+        </form>
+
+    </div>
 </div>
 </body>
 </html>

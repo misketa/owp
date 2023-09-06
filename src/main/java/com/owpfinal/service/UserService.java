@@ -21,5 +21,7 @@ public interface UserService {
 
     void update(User user);
 
-    User findById(Long id);
+    User findById(int id);
+
+    void otkaziPrijavu(int id);
 }

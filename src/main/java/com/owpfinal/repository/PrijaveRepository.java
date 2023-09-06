@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PrijaveRepository extends JpaRepository<Prijavezavakcinaciju, Integer> {
 
-    List<Prijavezavakcinaciju> findAllPrijavezavakcinacijusByUserId(Long id);
+    List<Prijavezavakcinaciju> findAllById(int id);
 }

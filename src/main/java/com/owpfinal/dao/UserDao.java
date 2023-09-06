@@ -19,5 +19,5 @@ public interface UserDao {
 
     public void update(User user);
 
-    public User findById(Long id);
+    public User findById(int id);
 }

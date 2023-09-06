@@ -18,4 +18,9 @@ public class VestOObolelimaServiceImpl implements VestiOObolelimaService {
     public List<VestiOObolelima> findAll() {
         return vestiOObolelimaDao.findAll();
     }
+
+    @Override
+    public void save(VestiOObolelima vestiOObolelima) {
+        vestiOObolelimaDao.save(vestiOObolelima);
+    }
 }

@@ -26,7 +26,17 @@ public class VakcineServiceImpl implements VakcineService {
     }
 
     @Override
-    public Vakcine findOne(String naziv) {
-        return vakcineDao.findOne(naziv);
+    public Vakcine findOne(int vakcina_id) {
+        return vakcineDao.findOne(vakcina_id);
+    }
+
+    @Override
+    public void update(Vakcine vakcina) {
+        vakcineDao.update(vakcina);
+    }
+
+    @Override
+    public void save(Vakcine vakcina) {
+        vakcineDao.save(vakcina);
     }
 }

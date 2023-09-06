@@ -79,12 +79,26 @@ public class VakcineImpl implements VakcineDao {
     }
 
     @Override
-    public Vakcine findOne(String naziv) {
+    public Vakcine findOne(int vakcina_id) {
         try {
-            String sql = "SELECT * FROM vakcine WHERE naziv = ?";
-            return jdbcTemplate.queryForObject(sql, new VakcineRowMapper(), naziv);
+            String sql = "SELECT * FROM vakcine WHERE vakcina_id = ?";
+            return jdbcTemplate.queryForObject(sql, new VakcineRowMapper(), vakcina_id);
         } catch (EmptyResultDataAccessException ex) {
             return null;
         }
+    }
+
+    @Override
+    public void update(Vakcine vakcina) {
+        String sql = "UPDATE vakcine SET naziv = ?, drzavaProizvodnje = ?" +
+                " WHERE vakcina_id = ?";
+        jdbcTemplate.update(sql, vakcina.getNaziv(),vakcina.getDrzavaProizvodnje(), vakcina.getVakcinaId());
+    }
+
+    @Override
+    public void save(Vakcine vakcina) {
+        String sql = "INSERT INTO vakcine (naziv, drzavaProizvodnje, kolicina) " +
+                "  VALUES (?, ?, ?)";
+        jdbcTemplate.update(sql, vakcina.getNaziv(), vakcina.getDrzavaProizvodnje(), vakcina.getKolicina());
     }
 }

@@ -5,6 +5,7 @@ import com.owpfinal.dao.VakcinacijaDaO;
 import com.owpfinal.model.Prijavezavakcinaciju;
 import com.owpfinal.model.Proizvodjaci;
 import com.owpfinal.model.User;
+import com.owpfinal.model.Vakcine;
 import com.owpfinal.repository.PrijaveRepository;
 import com.owpfinal.service.VakcinacijaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,7 +107,15 @@ public class VakcinacijaServiceImpl implements VakcinacijaService {
     }
 
     @Override
-    public List<Prijavezavakcinaciju> findAllByUserId(Long userId) {
-        return prijaveRepository.findAllPrijavezavakcinacijusByUserId(userId);
+    public List<Prijavezavakcinaciju> findAllByUserId(int userId) {
+        return vakcinacijaDaO.findAllByUserId(userId);
+
     }
+
+    @Override
+    public void deleteVakcinacija(int id) {
+         vakcinacijaDaO.obrisiPrijavu(id);
+    }
+
+
 }
